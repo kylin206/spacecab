@@ -1038,8 +1038,8 @@
 			{
 				bullets[_local1].pos.x = bullets[_local1].pos.x + bullets[_local1].vel.x;
 				bullets[_local1].pos.y = bullets[_local1].pos.y + (bullets[_local1].vel.y + GRAVITY);
-				setProperty("arena.herobullet" + _local1, _x, bullets[_local1].pos.x);
-				setProperty("arena.herobullet" + _local1, _y, -bullets[_local1].pos.y);
+				this.arena["herobullet" + _local1]._x= bullets[_local1].pos.x;
+				this.arena["herobullet" + _local1]._y= -bullets[_local1].pos.y;
 			}
 			_local1++;
 		}
@@ -1159,10 +1159,7 @@
 					bullet.pos.x += bullet.vel.x;
 					bullet.pos.y += bullet.vel.y;
 					bullet.mc._x = bullet.pos.x;
-					bullet.mc._y = bullet.pos.y;
-					
-					//setProperty((("arena.enemy" + i) + "bullet") + j, _x, bullet.pos.x);
-					//setProperty((("arena.enemy" + i) + "bullet") + j, _y, -bullet.pos.y);
+					bullet.mc._y = -bullet.pos.y;
 				}
 				j++;
 			}
@@ -1576,7 +1573,7 @@
 		{
 			if (savedRoom[_local2].crates[_local1] == 0)
 			{
-				setProperty("arena.crate" + _local1, _visible, false);
+				this.arena["crate" + _local1]. _visible = false;
 			}
 			_local1++;
 		}
