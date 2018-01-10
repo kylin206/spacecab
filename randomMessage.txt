@@ -1,0 +1,238 @@
+﻿
+	lastMessage = 0;	
+	var _local2 = type;
+
+	var _local1 = Math.random();
+	if (_local2 == "HERODIE")
+	{
+		_local1 = _local1 * 7;
+		if (_local1 < 1)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntHerodie1);
+		}
+		else if (_local1 < 2)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntHerodie2);
+		}
+		else if (_local1 < 3)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntHerodie3);
+		}
+		else if (_local1 < 4)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntHerodie4);
+		}
+		else if (_local1 < 5)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntHerodie5);
+		}
+		else if (_local1 < 6)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntHerodie6);
+		}
+		else
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntHerodie7);
+		}
+	}
+	else if (_local2 == "PICKUP")
+	{
+		_local1 = _local1 * 5;
+		if (_local1 < 1)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntPickup1);
+		}
+		else if (_local1 < 2)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntPickup2);
+		}
+		else if (_local1 < 3)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntPickup3);
+		}
+		else if (_local1 < 4)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntPickup4);
+		}
+		else
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntPickup5);
+		}
+	}
+	else if (_local2 == "SHOOTENEMY")
+	{
+		_local1 = _local1 * 7;
+		if (_local1 < 1)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntShootEnemy1);
+		}
+		else if (_local1 < 2)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntShootEnemy2);
+		}
+		else if (_local1 < 3)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntShootEnemy3);
+		}
+		else if (_local1 < 4)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntShootEnemy4);
+		}
+		else if (_local1 < 5)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntShootEnemy5);
+		}
+		else if (_local1 < 6)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntShootEnemy6);
+		}
+		else
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntShootEnemy7);
+		}
+	}
+	else if (_local2 == "HOMEBASE")
+	{
+		_local1 = _local1 * 6;
+		if (_local1 < 1)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntHomebase1);
+		}
+		else if (_local1 < 2)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntHomebase2);
+		}
+		else if (_local1 < 3)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntHomebase3);
+		}
+		else if (_local1 < 4)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntHomebase4);
+		}
+		else if (_local1 < 5)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntHomebase5);
+		}
+		else
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntHomebase6);
+		}
+	}
+	else if (_local2 == "TRIGGER")
+	{
+		_local1 = _local1 * 5;
+		if (_local1 < 1)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntTrigger1);
+		}
+		else if (_local1 < 2)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntTrigger2);
+		}
+		else if (_local1 < 3)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntTrigger3);
+		}
+		else if (_local1 < 4)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntTrigger4);
+		}
+		else
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntTrigger5);
+		}
+	}
+	else if (_local2 == "ROOM1")
+	{
+		messagecontrol.typeMessage("Welcome to Space Cab\rYour best just may\rbe good enough");
+		messagecontrol.typeMessage(_level0.txt_tauntRoom1);
+	}
+	else if (_local2 == "ROOM2")
+	{
+		messagecontrol.typeMessage(_level0.txt_tauntRoom2);
+	}
+	else if (_local2 == "ROOM3")
+	{
+		messagecontrol.typeMessage(_level0.txt_tauntRoom3);
+	}
+	else if (_local2 == "ROOM4")
+	{
+		messagecontrol.typeMessage(_level0.txt_tauntRoom4);
+	}
+	else if (_local2 == "ROOM5")
+	{
+		messagecontrol.typeMessage(_level0.txt_tauntRoom5);
+	}
+	else if (_local2 == "ROOM6")
+	{
+		messagecontrol.typeMessage(_level0.txt_tauntRoom6);
+	}
+	else if (_local2 == "IDLE")
+	{
+		_local1 = _local1 * 16;
+		if (_local1 < 1)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntIdle1);
+		}
+		else if (_local1 < 2)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntIdle2);
+		}
+		else if (_local1 < 3)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntIdle3);
+		}
+		else if (_local1 < 4)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntIdle4);
+		}
+		else if (_local1 < 5)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntIdle5);
+		}
+		else if (_local1 < 6)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntIdle6);
+		}
+		else if (_local1 < 7)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntIdle7);
+		}
+		else if (_local1 < 8)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntIdle8);
+		}
+		else if (_local1 < 9)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntIdle9);
+		}
+		else if (_local1 < 10)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntIdle10);
+		}
+		else if (_local1 < 11)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntIdle11);
+		}
+		else if (_local1 < 12)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntIdle12);
+		}
+		else if (_local1 < 13)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntIdle13);
+		}
+		else if (_local1 < 14)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntIdle14);
+		}
+		else if (_local1 < 15)
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntIdle15);
+		}
+		else
+		{
+			messagecontrol.typeMessage(_level0.txt_tauntIdle16);
+		}
+	}
