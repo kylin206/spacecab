@@ -1,6 +1,6 @@
 ﻿class Main extends MovieClip
 {
-	var hero:o_ship;
+	var hero:OShip;
 	var startTime:Number = 0;
 	var endTime:Number = 0;
 	var gameState;
@@ -214,7 +214,7 @@
 		var t = 0;
 		while (t < 4)
 		{
-			hero.hitpoints[t] = new o_Vector(0, 0);
+			hero.hitpoints[t] = new Vector(0, 0);
 			t++;
 		}
 		hero.mc.exhaust._visible = false;
@@ -621,7 +621,7 @@
 			heroCos = Math.cos((phys.rot - 90) * Math.PI / 180);
 			heroSin = -Math.sin((phys.rot - 90) * Math.PI / 180);
 			
-			var vel:o_Vector = phys.vel;
+			var vel:Vector = phys.vel;
 			phys.rot += phys.rotVel;
 			vel.x *= 0.98;
 			vel.y *= 0.98;
@@ -634,14 +634,14 @@
 				while (t < 6)
 				{
 					var tmpBlackholeMC = this.arena["blackhole" + t];
-					var tmpBlackvector = new o_Vector(0, 0);
+					var tmpBlackvector:Vector = new Vector(0, 0);
 					tmpBlackvector.x = phys.pos.x - tmpBlackholeMC._x;
 					tmpBlackvector.y = phys.pos.y + tmpBlackholeMC._y;
 					var dist = ((tmpBlackvector.x * tmpBlackvector.x) + (tmpBlackvector.y * tmpBlackvector.y));
 					if (dist < 22500)
 					{
 						var holepower = (dist / 22500) - 1;
-						tmpBlackvector = normalizeV(tmpBlackvector.x, tmpBlackvector.y);
+						tmpBlackvector.normalize();
 						if (triggers[2] != 1)
 						{
 							vel.x = vel.x - ((tmpBlackvector.x * holepower) * 0.3);
@@ -1091,7 +1091,7 @@
 		{
 			enemy.bulletNB++;
 		}
-		var _local3 = new o_Vector(0, 0);
+		var _local3 = new Vector(0, 0);
 		_local3.x = enemy.mc.ship.bulletpoint0._x;
 		_local3.y = enemy.mc.ship.bulletpoint0._y;
 		enemy.mc.ship.localToGlobal(_local3);
@@ -1109,10 +1109,10 @@
 		}
 		else if (enemyTypeProperties[enemy.typeID].accuracy < 0)
 		{
-			var vec = new o_Vector();
+			var vec:Vector = new Vector();
 			vec.x = hero.phys.pos.x - enemy.bullets[enemy.bulletNB].pos.x;
 			vec.y = hero.phys.pos.y - enemy.bullets[enemy.bulletNB].pos.y;
-			vec = normalizeV(vec.x, vec.y);
+			vec.normalize();
 			var adjustDegrees = (360 * (enemyTypeProperties[enemy.typeID].accuracy + 1));
 			adjustDegrees = (Math.random() * adjustDegrees) - (adjustDegrees / 2);
 			var aimCos = Math.cos((adjustDegrees * Math.PI) / 180);
@@ -1618,7 +1618,7 @@
 	function createShip(color)
 	{
 		trace("creating Ship object");
-		var ship:o_ship = new o_ship();
+		var ship:OShip = new OShip();
 		ship.color = color;
 		return ship;
 	}
@@ -1737,47 +1737,5 @@
 		return (_local2);
 		return (_local3);
 	}
-	function normalizeV(x, y)
-	{
-		var r = new o_Vector();
-		var dis = Math.sqrt(x * x + y * y);
-		r.x = x / dis;
-		r.y = y / dis;
-		return r;
-	}
-	function normalV(v)
-	{
-		var result = new o_Vector();
-		result.X = v.Y;
-		result.Y = -v.X;
-		return (result);
-	}
-	function dotV(Avec, Bvec)
-	{
-		var result = (Avec.X * Avec.Y) + (Bvec.X * Bvec.Y);
-		return (result);
-	}
-	function crossV(Avec, Bvec)
-	{
-	}
-	function subtractV(Avec, Bvec)
-	{
-		var Result = new o_Vector();
-		Result.x = Avec.x - Bvec.x;
-		Result.y = Avec.y - Bvec.y;
-		return (Result);
-	}
-	function addV(Avec, Bvec)
-	{
-		var Result = new o_Vector();
-		Result.x = Avec.x + Bvec.x;
-		Result.y = Avec.y + Bvec.y;
-		return (Result);
-	}
-	function lengthV(v)
-	{
-		var _local1 = v;
-		var _local2 = Math.sqrt((_local1.x * _local1.x) + (_local1.y * _local1.y));
-		return (_local2);
-	}
+	
 }
