@@ -51,6 +51,7 @@
 
 	function Main()
 	{
+		trace(0);
 		this.loadLevels();
 	}
 
@@ -104,110 +105,125 @@
 		trace("Dette er main ja det er så!!!!!!!!!!!!!! " + this);
 		this._quality = _parent._parent._parent.dataholder.gameQuality;
 		enemyTypeProperties = new Array();
-		enemyTypeProperties[0] = new o_enemyTypeProperties();
-		enemyTypeProperties[0].id = 0;
-		enemyTypeProperties[0].type = "BOA";
-		enemyTypeProperties[0].hitpoints = 10;
-		enemyTypeProperties[0].bulletType = "bulletred";
-		enemyTypeProperties[0].bulletVel = 4;
-		enemyTypeProperties[0].nbBullets = 5;
-		enemyTypeProperties[0].nbGuns = 1;
-		enemyTypeProperties[0].firerate = 50;
-		enemyTypeProperties[0].accuracy = -0.0001;
-		enemyTypeProperties[0].fireSound = "fireBOA";
-		enemyTypeProperties[0].hitSound = "bullethitter";
-		enemyTypeProperties[0].points = 50;
-		enemyTypeProperties[1] = new o_enemyTypeProperties();
-		enemyTypeProperties[1].id = 1;
-		enemyTypeProperties[1].type = "WORMDOWN";
-		enemyTypeProperties[1].hitpoints = 7;
-		enemyTypeProperties[1].bulletType = "bulletgreen";
-		enemyTypeProperties[1].bulletVel = 4;
-		enemyTypeProperties[1].nbBullets = 4;
-		enemyTypeProperties[1].nbGuns = 1;
-		enemyTypeProperties[1].firerate = 50;
-		enemyTypeProperties[1].accuracy = 180;
-		enemyTypeProperties[1].fireSound = "fire1";
-		enemyTypeProperties[1].hitSound = "hit1";
-		enemyTypeProperties[1].points = 25;
-		enemyTypeProperties[2] = new o_enemyTypeProperties();
-		enemyTypeProperties[2].id = 2;
-		enemyTypeProperties[2].type = "BOSS";
-		enemyTypeProperties[2].hitpoints = 40;
-		enemyTypeProperties[2].bulletType = "bulletred";
-		enemyTypeProperties[2].bulletVel = 8;
-		enemyTypeProperties[2].nbBullets = 25;
-		enemyTypeProperties[2].nbGuns = 1;
-		enemyTypeProperties[2].firerate = 50;
-		enemyTypeProperties[2].accuracy = -1;
-		enemyTypeProperties[2].fireSound = "fireBOA";
-		enemyTypeProperties[2].hitSound = "bullethitter";
-		enemyTypeProperties[2].points = 500;
-		enemyTypeProperties[3] = new o_enemyTypeProperties();
-		enemyTypeProperties[3].id = 3;
-		enemyTypeProperties[3].type = "BOSSARM";
-		enemyTypeProperties[3].hitpoints = 5;
-		enemyTypeProperties[3].bulletType = "bulletgreen";
-		enemyTypeProperties[3].bulletVel = 6;
-		enemyTypeProperties[3].nbBullets = 12;
-		enemyTypeProperties[3].nbGuns = 1;
-		enemyTypeProperties[3].firerate = 0.04;
-		enemyTypeProperties[3].accuracy = -0.05;
-		enemyTypeProperties[3].fireSound = "fireBOA";
-		enemyTypeProperties[3].hitSound = "bullethitter";
-		enemyTypeProperties[3].points = 50;
-		enemyTypeProperties[4] = new o_enemyTypeProperties();
-		enemyTypeProperties[4].id = 4;
-		enemyTypeProperties[4].type = "SEEDPOD";
-		enemyTypeProperties[4].hitpoints = 7;
-		enemyTypeProperties[4].bulletType = "bulletgreen";
-		enemyTypeProperties[4].bulletVel = 4;
-		enemyTypeProperties[4].nbBullets = 10;
-		enemyTypeProperties[4].nbGuns = 4;
-		enemyTypeProperties[4].firerate = 50;
-		enemyTypeProperties[4].accuracy = 0;
-		enemyTypeProperties[4].fireSound = "fire1";
-		enemyTypeProperties[4].hitSound = "hit1";
-		enemyTypeProperties[4].points = 70;
-		enemyTypeProperties[5] = new o_enemyTypeProperties();
-		enemyTypeProperties[5].id = 5;
-		enemyTypeProperties[5].type = "FLY";
-		enemyTypeProperties[5].hitpoints = 3;
-		enemyTypeProperties[5].bulletType = "bulletgreen";
-		enemyTypeProperties[5].bulletVel = 4;
-		enemyTypeProperties[5].nbBullets = 10;
-		enemyTypeProperties[5].nbGuns = 1;
-		enemyTypeProperties[5].firerate = 50;
-		enemyTypeProperties[5].accuracy = -1;
-		enemyTypeProperties[5].fireSound = "fire1";
-		enemyTypeProperties[5].hitSound = "hit1";
-		enemyTypeProperties[5].points = 100;
-		enemyTypeProperties[6] = new o_enemyTypeProperties();
-		enemyTypeProperties[6].id = 6;
-		enemyTypeProperties[6].type = "WORMRIGHT";
-		enemyTypeProperties[6].hitpoints = 10;
-		enemyTypeProperties[6].bulletType = "bulletgreen";
-		enemyTypeProperties[6].bulletVel = 4;
-		enemyTypeProperties[6].nbBullets = 4;
-		enemyTypeProperties[6].nbGuns = 1;
-		enemyTypeProperties[6].firerate = 30;
-		enemyTypeProperties[6].accuracy = 90;
-		enemyTypeProperties[6].fireSound = "fire1";
-		enemyTypeProperties[6].hitSound = "hit1";
-		enemyTypeProperties[6].points = 30;
-		enemyTypeProperties[7] = new o_enemyTypeProperties();
-		enemyTypeProperties[7].id = 7;
-		enemyTypeProperties[7].type = "WORMLEFT";
-		enemyTypeProperties[7].hitpoints = 10;
-		enemyTypeProperties[7].bulletType = "bulletgreen";
-		enemyTypeProperties[7].bulletVel = 4;
-		enemyTypeProperties[7].nbBullets = 4;
-		enemyTypeProperties[7].nbGuns = 1;
-		enemyTypeProperties[7].firerate = 30;
-		enemyTypeProperties[7].accuracy = 270;
-		enemyTypeProperties[7].fireSound = "fire1";
-		enemyTypeProperties[7].hitSound = "hit1";
-		enemyTypeProperties[7].points = 30;
+		var etp0:OEnemyTypeProperties = new OEnemyTypeProperties();
+		var etp1:OEnemyTypeProperties = new OEnemyTypeProperties();
+		var etp2:OEnemyTypeProperties = new OEnemyTypeProperties();
+		var etp3:OEnemyTypeProperties = new OEnemyTypeProperties();
+		var etp4:OEnemyTypeProperties = new OEnemyTypeProperties();
+		var etp5:OEnemyTypeProperties = new OEnemyTypeProperties();
+		var etp6:OEnemyTypeProperties = new OEnemyTypeProperties();
+		var etp7:OEnemyTypeProperties = new OEnemyTypeProperties();
+		enemyTypeProperties.push(etp0);
+		enemyTypeProperties.push(etp1);
+		enemyTypeProperties.push(etp2);
+		enemyTypeProperties.push(etp3);
+		enemyTypeProperties.push(etp4);
+		enemyTypeProperties.push(etp5);
+		enemyTypeProperties.push(etp6);
+		enemyTypeProperties.push(etp7);
+		etp0.id = 0;
+		etp0.type = "BOA";
+		etp0.hitpoints = 10;
+		etp0.bulletType = "bulletred";
+		etp0.bulletVel = 4;
+		etp0.nbBullets = 5;
+		etp0.nbGuns = 1;
+		etp0.firerate = 50;
+		etp0.accuracy = -0.0001;
+		etp0.fireSound = "fireBOA";
+		etp0.hitSound = "bullethitter";
+		etp0.points = 50;
+
+		etp1.id = 1;
+		etp1.type = "WORMDOWN";
+		etp1.hitpoints = 7;
+		etp1.bulletType = "bulletgreen";
+		etp1.bulletVel = 4;
+		etp1.nbBullets = 4;
+		etp1.nbGuns = 1;
+		etp1.firerate = 50;
+		etp1.accuracy = 180;
+		etp1.fireSound = "fire1";
+		etp1.hitSound = "hit1";
+		etp1.points = 25;
+
+		etp2.id = 2;
+		etp2.type = "BOSS";
+		etp2.hitpoints = 40;
+		etp2.bulletType = "bulletred";
+		etp2.bulletVel = 8;
+		etp2.nbBullets = 25;
+		etp2.nbGuns = 1;
+		etp2.firerate = 50;
+		etp2.accuracy = -1;
+		etp2.fireSound = "fireBOA";
+		etp2.hitSound = "bullethitter";
+		etp2.points = 500;
+
+		etp3.id = 3;
+		etp3.type = "BOSSARM";
+		etp3.hitpoints = 5;
+		etp3.bulletType = "bulletgreen";
+		etp3.bulletVel = 6;
+		etp3.nbBullets = 12;
+		etp3.nbGuns = 1;
+		etp3.firerate = 0.04;
+		etp3.accuracy = -0.05;
+		etp3.fireSound = "fireBOA";
+		etp3.hitSound = "bullethitter";
+		etp3.points = 50;
+
+		etp4.id = 4;
+		etp4.type = "SEEDPOD";
+		etp4.hitpoints = 7;
+		etp4.bulletType = "bulletgreen";
+		etp4.bulletVel = 4;
+		etp4.nbBullets = 10;
+		etp4.nbGuns = 4;
+		etp4.firerate = 50;
+		etp4.accuracy = 0;
+		etp4.fireSound = "fire1";
+		etp4.hitSound = "hit1";
+		etp4.points = 70;
+
+		etp5.id = 5;
+		etp5.type = "FLY";
+		etp5.hitpoints = 3;
+		etp5.bulletType = "bulletgreen";
+		etp5.bulletVel = 4;
+		etp5.nbBullets = 10;
+		etp5.nbGuns = 1;
+		etp5.firerate = 50;
+		etp5.accuracy = -1;
+		etp5.fireSound = "fire1";
+		etp5.hitSound = "hit1";
+		etp5.points = 100;
+
+		etp6.id = 6;
+		etp6.type = "WORMRIGHT";
+		etp6.hitpoints = 10;
+		etp6.bulletType = "bulletgreen";
+		etp6.bulletVel = 4;
+		etp6.nbBullets = 4;
+		etp6.nbGuns = 1;
+		etp6.firerate = 30;
+		etp6.accuracy = 90;
+		etp6.fireSound = "fire1";
+		etp6.hitSound = "hit1";
+		etp6.points = 30;
+
+		etp7.id = 7;
+		etp7.type = "WORMLEFT";
+		etp7.hitpoints = 10;
+		etp7.bulletType = "bulletgreen";
+		etp7.bulletVel = 4;
+		etp7.nbBullets = 4;
+		etp7.nbGuns = 1;
+		etp7.firerate = 30;
+		etp7.accuracy = 270;
+		etp7.fireSound = "fire1";
+		etp7.hitSound = "hit1";
+		etp7.points = 30;
 		nbHeroBullets = 50;
 		hero.mc = arena.heroholder;
 		hero.hitpoints = new Array();
@@ -221,18 +237,12 @@
 		hero.cargo = new Array();
 		trace("Creating bullets");
 		bullets = new Array(nbHeroBullets);
-		var t = 0;
+		var t:Number = 0;
 		while (t < nbHeroBullets)
 		{
-			bullets[t] = new o_bullet();
-			arena.attachMovie("bullethero","herobullet" + t,100 + t);
-			bullets[t].mc = this.arena["herobullet" + t];
-			bullets[t].mc._visible = false;
-			bullets[t].pos.x = -10;
-			bullets[t].pos.y = -10;
-			bullets[t].vel.x = 0;
-			bullets[t].vel.y = 0;
-			bullets[t].state = 0;
+			var mc:MovieClip = arena.attachMovie("bullethero","herobullet" + t,100 + t);
+			var bullet:OBullet = new OBullet(mc);
+			bullets[t] = bullet;
 			t++;
 		}
 		initSound();
@@ -268,14 +278,14 @@
 		while (t <= nbLevels)
 		{
 			firstTimeInRoom[t] = true;
-			savedRoom[t] = new o_savedRoom();
+			savedRoom[t] = new OSavedRoom();
 			t++;
 		}
 		doors = new Array();
 		var t = 0;
 		while (t < 5)
 		{
-			doors[t] = new o_door();
+			doors[t] = new ODoor();
 			t++;
 		}
 		_parent.statusbar.light0.gotoAndStop("greenoff");
@@ -300,7 +310,7 @@
 		while (t < 1000)
 		{
 			var tmpPlatform = this.arena["platform" + t];
-			
+
 			if (typeof (tmpPlatform) == "undefined")
 			{
 				break;
@@ -509,54 +519,57 @@
 	function exitLevel()
 	{
 		saveRoomState(level);
+		this._clearHeroBullets();
+		this._clearEnemyBullets();
+	}
+
+	function _clearHeroBullets():Void
+	{
 		var i:Number = 0;
 		while (i < nbHeroBullets)
 		{
-			bullets[i].mc._visible = false;
-			bullets[i].pos.x = -10;
-			bullets[i].pos.y = -10;
-			bullets[i].vel.x = 0;
-			bullets[i].vel.y = 0;
-			bullets[i].state = 0;
+
+			var bullet:OBullet = bullets[i]
+			bullet.dispose();
 			i++;
 		}
-		i = 0;
+	}
+
+	function _clearEnemyBullets():Void
+	{
+		var i:Number = 0;
+		var bullet:OBullet;
 		while (i < enemys.length)
 		{
 			trace("Removing bullets for enemy number " + i);
-			var j = 0;
+			var j:Number = 0;
 			while (j < enemys[i].nbBullets)
 			{
-				var bullet =enemys[i].bullets[j];
-				bullet.mc._visible = false;
-				bullet.pos.x = -10;
-				bullet.pos.y = -10;
-				bullet.vel.x = 0;
-				bullet.vel.y = 0;
-				bullet.state = 0;
+				bullet = enemys[i].bullets[j];
+				bullet.dispose();
 				j++;
 			}
 			i++;
 		}
 	}
+
 	function initEnemys()
 	{
 		enemys = new Array();
-		var t = 0;
-		var enemy:o_enemy;
+		var t:Number = 0;
+		var enemy:OEnemy;
 		while (t < 999)
 		{
-			var tmpEnemy = this.arena["enemy" + t];
+			var tmpEnemy:MovieClip = this.arena["enemy" + t];
 			if (typeof (tmpEnemy) == "undefined")
 			{
 				break;
 			}
 			else
 			{
-				enemy = new o_enemy();
+				enemy = new OEnemy(tmpEnemy);
 				enemys[t] = enemy;
 				enemy.id = t;
-				enemy.mc = tmpEnemy;
 				if (!firstTimeInRoom[level])
 				{
 					enemy.type = savedRoom[level].enemy.type;
@@ -566,61 +579,37 @@
 					enemy.type = arena.enemys[level][t];
 				}
 				trace("Initialising enemy number " + t + ". Type = \"" + enemy.type + "\"");
-				enemy.phys = new o_enemyPhys();
-				enemy.phys.rot = tmpEnemy._rotation;
-				tt = 0;
+				var tt = 0;
 				while (tt < enemyTypeProperties.length)
 				{
 					if (enemyTypeProperties[tt].type == enemy.type)
 					{
 						enemy.typeID = tt;
-						enemy.hitpoints = enemyTypeProperties[tt].hitpoints;
-						enemy.nbBullets = enemyTypeProperties[tt].nbBullets;
-						enemy.bulletType = enemyTypeProperties[tt].bulletType;
+						enemy.setProp(enemyTypeProperties[tt]);
 						break;
 					}
 					tt++;
 				}
-				enemy.bulletNB = 0;
-				enemy.lastFireFrames = 0;
-				enemy.state = 1;
-				enemy.mc.gotoAndPlay(1);
-				enemy.mc.ship.gotoAndStop(1);
-				enemy.mc._visible = true;
 			}
 			t++;
 		}
-		var t = 0;
+		t = 0;
 		while (t < enemys.length)
 		{
 			trace("Creating bullets for enemy number " + t);
 			enemy = enemys[t];
-			enemy.bullets = new Array(enemy.nbBullets);
-			var tt = 0;
-			while (tt < enemy.nbBullets)
-			{
-				enemy.bullets[tt] = new o_bullet();
-				var bullet=arena.attachMovie(enemy.bulletType,(("enemy" + t) + "bullet") + tt,((t + 2) * 100) + tt);
-				enemy.bullets[tt].mc = bullet;//eval((("arena.enemy" + t) + "bullet") + tt);
-				enemy.bullets[tt].mc._visible = false;
-				enemy.bullets[tt].pos.x = -10;
-				enemy.bullets[tt].pos.y = -10;
-				enemy.bullets[tt].vel.x = 0;
-				enemy.bullets[tt].vel.y = 0;
-				enemy.bullets[tt].state = 0;
-				tt++;
-			}
+			enemy.initBullets(arena);
 			t++;
 		}
 	}
 	function updateHero()
 	{
-		var phys:o_phys = this.hero.phys;
+		var phys:OPhys = this.hero.phys;
 		if (this.hero.state == "FLYING")
 		{
 			heroCos = Math.cos((phys.rot - 90) * Math.PI / 180);
 			heroSin = -Math.sin((phys.rot - 90) * Math.PI / 180);
-			
+
 			var vel:Vector = phys.vel;
 			phys.rot += phys.rotVel;
 			vel.x *= 0.98;
@@ -660,10 +649,8 @@
 			phys.pos.y += vel.y;
 			this.arena.heroholder._x = phys.pos.x;
 			this.arena.heroholder._y = -phys.pos.y;
-
 			this.arena.heroholder._rotation = phys.rot;
 			phys.acc *= 0.9;
-
 		}
 	}
 	function checkLevelchange()
@@ -757,7 +744,7 @@
 			hero.mc.localToGlobal(hero.hitpoints[t]);
 			t++;
 		}
-		
+
 		if (hero.state == "FLYING")
 		{
 			var t = 0;
@@ -892,36 +879,36 @@
 	}
 	function checkHeroBulletsHit()
 	{
-		var _local3 = 0;
-		while (_local3 < nbHeroBullets)
+		var i:Number = 0;
+		while (i < nbHeroBullets)
 		{
-			if (bullets[_local3].state == 1)
+			if (bullets[i].state == 1)
 			{
-				bullets[_local3].screenPos.x = bullets[_local3].pos.x;
-				bullets[_local3].screenPos.y = -bullets[_local3].pos.y;
-				arena.localToGlobal(bullets[_local3].screenPos);
-				var _local1 = 0;
-				while (_local1 < enemys.length)
+				bullets[i].screenPos.x = bullets[i].pos.x;
+				bullets[i].screenPos.y = -bullets[i].pos.y;
+				arena.localToGlobal(bullets[i].screenPos);
+				var j = 0;
+				while (j < enemys.length)
 				{
-					if (enemys[_local1].state != 0)
+					if (enemys[j].state != 0)
 					{
-						if (enemys[_local1].mc.hitTest(bullets[_local3].screenPos.x, bullets[_local3].screenPos.y, true) == true)
+						if (enemys[j].mc.hitTest(bullets[i].screenPos.x, bullets[i].screenPos.y, true) == true)
 						{
-							bullets[_local3].state = 0;
-							bullets[_local3].mc.play();
-							if (enemys[_local1].state == 1)
+							bullets[i].state = 0;
+							bullets[i].mc.play();
+							if (enemys[j].state == 1)
 							{
-								enemys[_local1].hitpoints--;
+								enemys[j].hitpoints--;
 							}
-							if (enemys[_local1].hitpoints <= 0)
+							if (enemys[j].hitpoints <= 0)
 							{
-								enemys[_local1].state = 0;
-								enemys[_local1].mc.stop();
-								enemys[_local1].mc.ship.gotoAndPlay("explode");
-								hero.score = hero.score + enemyTypeProperties[enemys[_local1].typeID].points;
+								enemys[j].state = 0;
+								enemys[j].mc.stop();
+								enemys[j].mc.ship.gotoAndPlay("explode");
+								hero.score = hero.score + enemyTypeProperties[enemys[j].typeID].points;
 								_parent.statusbar.score = hero.score;
 								randomMessage("SHOOTENEMY");
-								if ((level == 6) && (_local1 == 0))
+								if ((level == 6) && (j == 0))
 								{
 									var _local2 = 1;
 									while (_local2 < 5)
@@ -945,15 +932,15 @@
 							}
 						}
 					}
-					_local1++;
+					j++;
 				}
-				if (arena.arenahit.hitTest(bullets[_local3].screenPos.x, bullets[_local3].screenPos.y, true) == true)
+				if (arena.arenahit.hitTest(bullets[i].screenPos.x, bullets[i].screenPos.y, true) == true)
 				{
-					bullets[_local3].state = 0;
-					bullets[_local3].mc.play();
+					bullets[i].state = 0;
+					bullets[i].mc.play();
 				}
 			}
-			_local3++;
+			i++;
 		}
 	}
 	function checkEnemyBulletsHit()
@@ -1133,7 +1120,7 @@
 		enemy.bullets[enemy.bulletNB].state = 1;
 		enemy.bullets[enemy.bulletNB].mc.gotoAndStop(1);
 		enemy.bullets[enemy.bulletNB].mc._visible = true;
-		
+
 		if (gunID < (enemyTypeProperties[enemy.typeID].nbGuns - 1))
 		{
 			fireEnemyBullets(enemy,gunID + 1);
@@ -1366,7 +1353,7 @@
 		_parent._parent._parent.dataholder.playerScore = hero.score;
 		this._quality = _parent._parent._parent.dataholder.menuQuality;
 	}
-	function outroPilot(physObj:o_phys)
+	function outroPilot(physObj:OPhys)
 	{
 		setAcc(physObj,1);
 		heroCos = Math.cos((rot - 90) * Math.PI / 180);
@@ -1393,10 +1380,10 @@
 	}
 	function randomMessage(type)
 	{
-		#include "randomMessage.txt"
+#include "randomMessage.txt"
 	}
 
-	function setAcc(phys:o_phys, val)
+	function setAcc(phys:OPhys, val)
 	{
 		phys.acc += (val * 0.06);
 		if (phys.acc > phys.maxAcc)
@@ -1410,7 +1397,7 @@
 
 	}
 
-	function setrotvel(phys:o_phys, val)
+	function setrotvel(phys:OPhys, val)
 	{
 		phys.rotVel = val;
 	}
@@ -1445,19 +1432,19 @@
 		}
 		var tmpGun = this.hero.mc["bulletpoint" + gunID];
 		var bullet=bullets[bulletNB];
-		
+
 		bullet.pos.x = (hero.phys.pos.x + (tmpGun._x * heroSin)) + ((-tmpGun._y) * heroCos);
 		bullet.pos.y = (hero.phys.pos.y + ((-tmpGun._x) * heroCos)) + ((-tmpGun._y) * heroSin);
-		
+
 		bullet.vel.x = (hero.phys.vel.x / 4) + (10 * heroCos);
 		bullet.vel.y = (hero.phys.vel.y / 4) + (10 * heroSin);
-		
+
 		var bulletCos = Math.cos((angle * Math.PI) / 180);
 		var bulletSin = (-Math.sin((angle * Math.PI) / 180));
-		
+
 		var NewX = ((bullet.vel.x * bulletCos) + (bullet.vel.y * (-bulletSin)));
 		var NewY = ((bullet.vel.x * bulletSin) + (bullet.vel.y * bulletCos));
-		
+
 		bullet.vel.x = NewX;
 		bullet.vel.y = NewY;
 		bullet.state = 1;
@@ -1534,48 +1521,46 @@
 			}
 		}
 	}
-	function saveRoomState(roomID)
+	function saveRoomState(roomID:Number)
 	{
-		var _local2 = roomID;
+		var roomI:Number = roomID;
 		trace("Saving room state");
-		var _local1 = 0;
-		while (_local1 < enemys.length)
+		var j:Number = 0;
+		while (j < enemys.length)
 		{
-			savedRoom[_local2].enemys[_local1] = new o_savedEnemy();
-			savedRoom[_local2].enemys[_local1].state = enemys[_local1].state;
-			savedRoom[_local2].enemys[_local1].hitpoints = enemys[_local1].hitpoints;
-			savedRoom[_local2].enemys[_local1].type = enemys[_local1].type;
-			_local1++;
+			savedRoom[roomI].enemys[j] = new OSavedEnemy();
+			savedRoom[roomI].enemys[j].state = enemys[j].state;
+			savedRoom[roomI].enemys[j].hitpoints = enemys[j].hitpoints;
+			savedRoom[roomI].enemys[j].type = enemys[j].type;
+			j++;
 		}
 	}
-	function loadRoomState(roomID)
+	function loadRoomState(roomID:Number)
 	{
-
-		var _local2 = roomID;
+		var roomI:Number = roomID;
 		trace("Loading room state");
-		var _local1 = 0;
-		while (_local1 < enemys.length)
+		var i:Number = 0;
+		while (i < enemys.length)
 		{
-
-			enemys[_local1].state = savedRoom[_local2].enemys[_local1].state;
-			enemys[_local1].hitpoints = savedRoom[_local2].enemys[_local1].hitpoints;
-			enemys[_local1].type = savedRoom[_local2].enemys[_local1].type;
-			trace((("Enemy id : " + _local1) + "   State : ") + savedRoom[_local2].enemys[_local1].state);
-			if (enemys[_local1].state == 0)
+			enemys[i].state = savedRoom[roomI].enemys[i].state;
+			enemys[i].hitpoints = savedRoom[roomI].enemys[i].hitpoints;
+			enemys[i].type = savedRoom[roomI].enemys[i].type;
+			trace((("Enemy id : " + i) + "   State : ") + savedRoom[roomI].enemys[i].state);
+			if (enemys[i].state == 0)
 			{
-				enemys[_local1].mc.stop();
-				enemys[_local1].mc.ship.gotoAndStop("dead");
+				enemys[i].mc.stop();
+				enemys[i].mc.ship.gotoAndStop("dead");
 			}
-			_local1++;
+			i++;
 		}
-		_local1 = 0;
-		while (_local1 < nbCrates)
+		i = 0;
+		while (i < nbCrates)
 		{
-			if (savedRoom[_local2].crates[_local1] == 0)
+			if (savedRoom[roomI].crates[i] == 0)
 			{
-				this.arena["crate" + _local1]. _visible = false;
+				this.arena["crate" + i]. _visible = false;
 			}
-			_local1++;
+			i++;
 		}
 	}
 	function updateCamera()
@@ -1692,30 +1677,6 @@
 		thrusting = false;
 	}
 
-
-	function o_enemyPhys(rot)
-	{
-		var _local1 = this;
-		_local1.rot = rot;
-	}
-	function o_savedRoom(enemys, crates, triggers)
-	{
-		var _local1 = this;
-		_local1.enemys = new Array();
-		_local1.crates = new Array();
-		_local1.triggers = new Array();
-	}
-	function o_savedEnemy(state, hitpoints, type)
-	{
-		var _local1 = this;
-		_local1.state = state;
-		_local1.hitpoints = hitpoints;
-		_local1.type = type;
-	}
-	function o_door(state)
-	{
-		this.state = 0;
-	}
 	function o_sounds(heroshoot, bullethitter, explode, gameover, levelcompleted, pickup, deliver, thrust, door)
 	{
 		var _local1 = this;
@@ -1737,5 +1698,5 @@
 		return (_local2);
 		return (_local3);
 	}
-	
+
 }

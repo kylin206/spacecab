@@ -49,7 +49,7 @@ function initGame()
 	trace("Dette er main ja det er så!!!!!!!!!!!!!! " + this);
 	this._quality = _parent._parent._parent.dataholder.gameQuality;
 	enemyTypeProperties = new Array();
-	enemyTypeProperties[0] = new o_enemyTypeProperties();
+	enemyTypeProperties[0] = new OEnemyTypeProperties();
 	enemyTypeProperties[0].id = 0;
 	enemyTypeProperties[0].type = "BOA";
 	enemyTypeProperties[0].hitpoints = 10;
@@ -62,7 +62,7 @@ function initGame()
 	enemyTypeProperties[0].fireSound = "fireBOA";
 	enemyTypeProperties[0].hitSound = "bullethitter";
 	enemyTypeProperties[0].points = 50;
-	enemyTypeProperties[1] = new o_enemyTypeProperties();
+	enemyTypeProperties[1] = new OEnemyTypeProperties();
 	enemyTypeProperties[1].id = 1;
 	enemyTypeProperties[1].type = "WORMDOWN";
 	enemyTypeProperties[1].hitpoints = 7;
@@ -75,7 +75,7 @@ function initGame()
 	enemyTypeProperties[1].fireSound = "fire1";
 	enemyTypeProperties[1].hitSound = "hit1";
 	enemyTypeProperties[1].points = 25;
-	enemyTypeProperties[2] = new o_enemyTypeProperties();
+	enemyTypeProperties[2] = new OEnemyTypeProperties();
 	enemyTypeProperties[2].id = 2;
 	enemyTypeProperties[2].type = "BOSS";
 	enemyTypeProperties[2].hitpoints = 40;
@@ -88,7 +88,7 @@ function initGame()
 	enemyTypeProperties[2].fireSound = "fireBOA";
 	enemyTypeProperties[2].hitSound = "bullethitter";
 	enemyTypeProperties[2].points = 500;
-	enemyTypeProperties[3] = new o_enemyTypeProperties();
+	enemyTypeProperties[3] = new OEnemyTypeProperties();
 	enemyTypeProperties[3].id = 3;
 	enemyTypeProperties[3].type = "BOSSARM";
 	enemyTypeProperties[3].hitpoints = 5;
@@ -101,7 +101,7 @@ function initGame()
 	enemyTypeProperties[3].fireSound = "fireBOA";
 	enemyTypeProperties[3].hitSound = "bullethitter";
 	enemyTypeProperties[3].points = 50;
-	enemyTypeProperties[4] = new o_enemyTypeProperties();
+	enemyTypeProperties[4] = new OEnemyTypeProperties();
 	enemyTypeProperties[4].id = 4;
 	enemyTypeProperties[4].type = "SEEDPOD";
 	enemyTypeProperties[4].hitpoints = 7;
@@ -114,7 +114,7 @@ function initGame()
 	enemyTypeProperties[4].fireSound = "fire1";
 	enemyTypeProperties[4].hitSound = "hit1";
 	enemyTypeProperties[4].points = 70;
-	enemyTypeProperties[5] = new o_enemyTypeProperties();
+	enemyTypeProperties[5] = new OEnemyTypeProperties();
 	enemyTypeProperties[5].id = 5;
 	enemyTypeProperties[5].type = "FLY";
 	enemyTypeProperties[5].hitpoints = 3;
@@ -127,7 +127,7 @@ function initGame()
 	enemyTypeProperties[5].fireSound = "fire1";
 	enemyTypeProperties[5].hitSound = "hit1";
 	enemyTypeProperties[5].points = 100;
-	enemyTypeProperties[6] = new o_enemyTypeProperties();
+	enemyTypeProperties[6] = new OEnemyTypeProperties();
 	enemyTypeProperties[6].id = 6;
 	enemyTypeProperties[6].type = "WORMRIGHT";
 	enemyTypeProperties[6].hitpoints = 10;
@@ -140,7 +140,7 @@ function initGame()
 	enemyTypeProperties[6].fireSound = "fire1";
 	enemyTypeProperties[6].hitSound = "hit1";
 	enemyTypeProperties[6].points = 30;
-	enemyTypeProperties[7] = new o_enemyTypeProperties();
+	enemyTypeProperties[7] = new OEnemyTypeProperties();
 	enemyTypeProperties[7].id = 7;
 	enemyTypeProperties[7].type = "WORMLEFT";
 	enemyTypeProperties[7].hitpoints = 10;
@@ -170,7 +170,7 @@ function initGame()
 	var t = 0;
 	while (t < nbHeroBullets)
 	{
-		bullets[t] = new o_bullet();
+		bullets[t] = new OBullet();
 		arena.attachMovie("bullethero","herobullet" + t,100 + t);
 		bullets[t].mc = eval("arena.herobullet" + t);
 		bullets[t].mc._visible = false;
@@ -486,7 +486,7 @@ function initEnemys()
 {
 	enemys = new Array();
 	var t = 0;
-	var enemy:o_enemy;
+	var enemy:OEnemy;
 	while (t < 999)
 	{
 		var tmpEnemy = eval("arena.enemy" + t);
@@ -496,7 +496,7 @@ function initEnemys()
 		}
 		else
 		{
-			enemy = new o_enemy();
+			enemy = new OEnemy();
 			enemys[t] = enemy;
 			enemy.id = t;
 			enemy.mc = tmpEnemy;
@@ -542,7 +542,7 @@ function initEnemys()
 		var tt = 0;
 		while (tt < enemy.nbBullets)
 		{
-			enemy.bullets[tt] = new o_bullet();
+			enemy.bullets[tt] = new OBullet();
 			arena.attachMovie(enemy.bulletType,(("enemy" + t) + "bullet") + tt,((t + 2) * 100) + tt);
 			enemy.bullets[tt].mc = eval((("arena.enemy" + t) + "bullet") + tt);
 			enemy.bullets[tt].mc._visible = false;

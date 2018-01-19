@@ -1,4 +1,4 @@
-﻿class o_enemyTypeProperties
+﻿class OEnemyTypeProperties
 {
 	public var id:Number = 0;
 	public var type:String = "";
@@ -17,7 +17,7 @@
 	public var points:Number;
 
 
-	public function o_enemyTypeProperties()
+	public function OEnemyTypeProperties()
 	{
 	}
 }

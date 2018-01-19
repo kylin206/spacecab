@@ -1,6 +1,6 @@
 ﻿class OShip
 {
-	var phys:o_phys;
+	var phys:OPhys;
 	var mc;
 	var hitpoints;
 	var state;
@@ -30,9 +30,9 @@
 		this.powerup = powerup;
 	}
 
-	private function createPhys():o_phys
+	private function createPhys():OPhys
 	{
-		var phys:o_phys = new o_phys();
+		var phys:OPhys = new OPhys();
 		phys.pos = new Vector(100, 100);
 		phys.vel = new Vector(0, 0);
 		phys.acc = 0;

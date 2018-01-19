@@ -8,7 +8,13 @@
 		this.x = x;
 		this.y = y;
 	}
-
+	
+	public function setTo(x:Number, y:Number):Void
+	{
+		this.x = x;
+		this.y = y;
+	}
+	
 	public function subtract(vec:Vector):Void
 	{
 		this.x -= vec.x;

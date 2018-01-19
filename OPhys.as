@@ -1,4 +1,4 @@
-﻿class o_phys
+﻿class OPhys
 {
 	var pos;
 	var vel:Vector;
@@ -10,7 +10,7 @@
 	var maxVel;
 	var maxRotVel;
 
-	public function o_phys(pos, acc, rot, rotVel, maxAcc, minAcc, maxVel, maxRotVel)
+	public function OPhys(pos, acc, rot, rotVel, maxAcc, minAcc, maxVel, maxRotVel)
 	{
 		this.pos = pos;
 		this.vel = new Vector();
