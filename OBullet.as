@@ -22,4 +22,14 @@
 		this.vel.setTo(0,0);
 		this.state = 0;
 	}
+
+	public function update():Void
+	{
+		if (this.state == 1)
+		{
+			this.pos.add(this.vel);
+			this.mc._x = this.pos.x;
+			this.mc._y = -this.pos.y;
+		}
+	}
 }

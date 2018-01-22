@@ -1,15 +1,14 @@
 ﻿class Main extends MovieClip
 {
 	var hero:OShip;
+	var bullets:Array;
 	var startTime:Number = 0;
 	var endTime:Number = 0;
 	var gameState;
 	var arena;
 	var _quality;
 	var GRAVITY:Number = -0.15;
-	var nbHeroBullets;
-	var bullets;
-	var enemyTypeProperties;
+	var enemyTypeProperties:Array;
 	var level:Number = 0;
 	var bulletNB:Number = 0;
 	var dropCrateOK:Boolean = false;
@@ -224,27 +223,13 @@
 		etp7.fireSound = "fire1";
 		etp7.hitSound = "hit1";
 		etp7.points = 30;
-		nbHeroBullets = 50;
+		
 		hero.mc = arena.heroholder;
-		hero.hitpoints = new Array();
-		var t = 0;
-		while (t < 4)
-		{
-			hero.hitpoints[t] = new Vector(0, 0);
-			t++;
-		}
 		hero.mc.exhaust._visible = false;
-		hero.cargo = new Array();
 		trace("Creating bullets");
-		bullets = new Array(nbHeroBullets);
-		var t:Number = 0;
-		while (t < nbHeroBullets)
-		{
-			var mc:MovieClip = arena.attachMovie("bullethero","herobullet" + t,100 + t);
-			var bullet:OBullet = new OBullet(mc);
-			bullets[t] = bullet;
-			t++;
-		}
+		hero.initBullets(arena);
+		bullets = hero.bullets;
+		
 		initSound();
 		level = 1;
 		bulletNB = 0;
@@ -360,7 +345,7 @@
 		{
 			if (doors[t].state == 0)
 			{
-				var tmpDoor = this.arena.arenahit["door" + t];
+				var tmpDoor:MovieClip = this.arena.arenahit["door" + t];
 				tmpDoor.gotoAndStop("closed");
 			}
 			t++;
@@ -525,30 +510,15 @@
 
 	function _clearHeroBullets():Void
 	{
-		var i:Number = 0;
-		while (i < nbHeroBullets)
-		{
-
-			var bullet:OBullet = bullets[i]
-			bullet.dispose();
-			i++;
-		}
+		hero.clearBullets();
 	}
 
 	function _clearEnemyBullets():Void
 	{
 		var i:Number = 0;
-		var bullet:OBullet;
-		while (i < enemys.length)
+		while (i < this.enemys.length)
 		{
-			trace("Removing bullets for enemy number " + i);
-			var j:Number = 0;
-			while (j < enemys[i].nbBullets)
-			{
-				bullet = enemys[i].bullets[j];
-				bullet.dispose();
-				j++;
-			}
+			this.enemys[i].clearBullets();
 			i++;
 		}
 	}
@@ -577,6 +547,7 @@
 				else
 				{
 					enemy.type = arena.enemys[level][t];
+					trace("initEnemys"+enemy.type +"_____"+arena.enemys[level][t])
 				}
 				trace("Initialising enemy number " + t + ". Type = \"" + enemy.type + "\"");
 				var tt = 0;
@@ -604,72 +575,27 @@
 	}
 	function updateHero()
 	{
-		var phys:OPhys = this.hero.phys;
-		if (this.hero.state == "FLYING")
-		{
-			heroCos = Math.cos((phys.rot - 90) * Math.PI / 180);
-			heroSin = -Math.sin((phys.rot - 90) * Math.PI / 180);
-
-			var vel:Vector = phys.vel;
-			phys.rot += phys.rotVel;
-			vel.x *= 0.98;
-			vel.y *= 0.98;
-			vel.x += phys.acc * heroCos;
-			vel.y += (phys.acc * heroSin) + (this.GRAVITY * ((this.hero.weight / 2) + 1));
-
-			if ((level == 4) && (phys.pos.x < arena.blackhole0._x))
-			{
-				var t = 0;
-				while (t < 6)
-				{
-					var tmpBlackholeMC = this.arena["blackhole" + t];
-					var tmpBlackvector:Vector = new Vector(0, 0);
-					tmpBlackvector.x = phys.pos.x - tmpBlackholeMC._x;
-					tmpBlackvector.y = phys.pos.y + tmpBlackholeMC._y;
-					var dist = ((tmpBlackvector.x * tmpBlackvector.x) + (tmpBlackvector.y * tmpBlackvector.y));
-					if (dist < 22500)
-					{
-						var holepower = (dist / 22500) - 1;
-						tmpBlackvector.normalize();
-						if (triggers[2] != 1)
-						{
-							vel.x = vel.x - ((tmpBlackvector.x * holepower) * 0.3);
-							vel.y = vel.y - ((tmpBlackvector.y * holepower) * 0.3);
-						}
-						else
-						{
-							vel.x = vel.x + ((tmpBlackvector.x * holepower) * 0.25);
-							vel.y = vel.y + ((tmpBlackvector.y * holepower) * 0.25);
-						}
-					}
-					t++;
-				}
-			}
-			phys.pos.x += vel.x;
-			phys.pos.y += vel.y;
-			this.arena.heroholder._x = phys.pos.x;
-			this.arena.heroholder._y = -phys.pos.y;
-			this.arena.heroholder._rotation = phys.rot;
-			phys.acc *= 0.9;
-		}
+		this.hero.update(arena, level, triggers, GRAVITY);
+		this.heroCos = this.hero.heroCos;
+		this.heroSin = this.hero.heroSin;
 	}
 	function checkLevelchange()
 	{
 		if (level == 1)
 		{
-			if (hero.mc.center.hitTest(arena.changelevel0) == true)
+			if (hero.mc.center.hitTest(arena.changelevel0))
 			{
 				changeLevel(6);
 			}
-			else if (hero.mc.center.hitTest(arena.changelevel1) == true)
+			else if (hero.mc.center.hitTest(arena.changelevel1))
 			{
 				changeLevel(2);
 			}
-			else if (hero.mc.center.hitTest(arena.changelevel2) == true)
+			else if (hero.mc.center.hitTest(arena.changelevel2))
 			{
 				changeLevel(4);
 			}
-			else if (hero.mc.center.hitTest(arena.changelevel3) == true)
+			else if (hero.mc.center.hitTest(arena.changelevel3))
 			{
 				gameCompleted();
 			}
@@ -713,7 +639,7 @@
 		}
 		else if (level == 6)
 		{
-			if (doors[3].state == 1)
+			//if (doors[3].state == 1)
 			{
 				if (hero.mc.center.hitTest(arena.changelevel0) == true)
 				{
@@ -754,7 +680,9 @@
 				tmpPlatform = this.arena["platform" + t];
 				if (hero.mc.hull.hitTest(tmpPlatform))
 				{
-					if ((hero.mc._rotation >= -10) && (hero.mc._rotation <= 10))
+					//小角度自动校正
+					//if ((hero.mc._rotation >= -10) && (hero.mc._rotation <= 10))
+					if ((hero.mc._rotation >= -40) && (hero.mc._rotation <= 40))
 					{
 						if ((hero.mc._rotation == 0) && (hero.phys.vel.y > -2))
 						{
@@ -858,29 +786,32 @@
 				{
 					if (enemys[tt].state != 0)
 					{
-						if (enemys[tt].mc.hitTest(hero.hitpoints[t].x, hero.hitpoints[t].y, true) == true)
+						if (enemys[tt].mc.hitTest(hero.hitpoints[t].x, hero.hitpoints[t].y, true))
 						{
 							wasHit = true;
 						}
 					}
 					tt++;
 				}
-				if (arena.arenahit.hitTest(hero.hitpoints[t].x, hero.hitpoints[t].y, true) == true)
+				if (arena.arenahit.hitTest(hero.hitpoints[t].x, hero.hitpoints[t].y, true))
 				{
 					wasHit = true;
 				}
 				t++;
 			}
-			if (wasHit == true)
+			if (wasHit)
 			{
-				heroDie();
+				//撞墙
+				//heroDie();
+				hero.phys.vel.x *=-1;//撞墙不死反弹
+				hero.phys.vel.y *=-1;
 			}
 		}
 	}
 	function checkHeroBulletsHit()
 	{
 		var i:Number = 0;
-		while (i < nbHeroBullets)
+		while (i < hero.nbBullets)
 		{
 			if (bullets[i].state == 1)
 			{
@@ -899,6 +830,9 @@
 							if (enemys[j].state == 1)
 							{
 								enemys[j].hitpoints--;
+								
+								
+								trace("hp:"+enemys[j].hitpoints)
 							}
 							if (enemys[j].hitpoints <= 0)
 							{
@@ -945,37 +879,42 @@
 	}
 	function checkEnemyBulletsHit()
 	{
-		var i = 0;
+		var i:Number = 0;
+		var bullet:OBullet;
 		while (i < enemys.length)
 		{
-			var _local1 = 0;
-			while (_local1 < enemys[i].nbBullets)
+			var j:Number = 0;
+			while (j < enemys[i].nbBullets)
 			{
-				if (enemys[i].bullets[_local1].state == 1)
+				bullet = enemys[i].bullets[j];
+				if (bullet.state == 1)
 				{
-					enemys[i].bullets[_local1].screenPos.x = enemys[i].bullets[_local1].pos.x;
-					enemys[i].bullets[_local1].screenPos.y = -enemys[i].bullets[_local1].pos.y;
-					arena.localToGlobal(enemys[i].bullets[_local1].screenPos);
-					if (arena.arenahit.hitTest(enemys[i].bullets[_local1].screenPos.x, enemys[i].bullets[_local1].screenPos.y, true) == true)
+					bullet.screenPos.x = bullet.pos.x;
+					bullet.screenPos.y = -bullet.pos.y;
+					arena.localToGlobal(bullet.screenPos);
+					//打到墙壁
+					if (arena.arenahit.hitTest(bullet.screenPos.x, bullet.screenPos.y, true))
 					{
-						enemys[i].bullets[_local1].state = 0;
-						enemys[i].bullets[_local1].mc.play();
+						bullet.state = 0;
+						bullet.mc.play();
 					}
-					else if (hero.mc.hull.hitTest(enemys[i].bullets[_local1].screenPos.x, enemys[i].bullets[_local1].screenPos.y, true) == true)
+					//打到主角
+					else if (hero.mc.hull.hitTest(bullet.screenPos.x, bullet.screenPos.y, true))
 					{
 						if (hero.state != "DYING")
 						{
-							enemys[i].bullets[_local1].state = 0;
-							enemys[i].bullets[_local1].mc.play();
-							heroDie();
+							bullet.state = 0;
+							bullet.mc.play();
+							//heroDie();//测试屏蔽不怕子弹
 						}
 					}
 				}
-				_local1++;
+				j++;
 			}
 			i++;
 		}
 	}
+	//卸货
 	function unloadCrates()
 	{
 		hero.state = "UNLOADING";
@@ -1018,110 +957,84 @@
 	}
 	function updateHeroBullets()
 	{
-		var _local1 = 0;
-		while (_local1 < nbHeroBullets)
+		var i:Number = 0;
+		var bullet:OBullet;
+		while (i < hero.nbBullets)
 		{
-			if (bullets[_local1].state == 1)
-			{
-				bullets[_local1].pos.x = bullets[_local1].pos.x + bullets[_local1].vel.x;
-				bullets[_local1].pos.y = bullets[_local1].pos.y + (bullets[_local1].vel.y + GRAVITY);
-				this.arena["herobullet" + _local1]._x= bullets[_local1].pos.x;
-				this.arena["herobullet" + _local1]._y= -bullets[_local1].pos.y;
-			}
-			_local1++;
+			bullet = bullets[i];
+			bullet.update();
+			i++;
 		}
 	}
 	function checkEnemyFire()
 	{
-		var _local1 = 0;
-		while (_local1 < enemys.length)
+		var i:Number = 0;
+		var enemy:OEnemy;
+		while (i < enemys.length)
 		{
-			if (enemys[_local1].state == 1)
+			enemy = this.enemys[i];
+			if (enemy.checkFire())
 			{
-				enemys[_local1].lastFireFrames++;
-				if (enemyTypeProperties[enemys[_local1].typeID].firerate == "ONSIGHT")
-				{
-					enemys[_local1].phys.rot = enemys[_local1].mc.ship._rotation;
-				}
-				else if (enemyTypeProperties[enemys[_local1].typeID].firerate > 1)
-				{
-					if (enemys[_local1].lastFireFrames >= enemyTypeProperties[enemys[_local1].typeID].firerate)
-					{
-						fireEnemyBullets(enemys[_local1],0);
-						enemys[_local1].lastFireFrames = 0;
-					}
-				}
-				else if (enemyTypeProperties[enemys[_local1].typeID].firerate < 1)
-				{
-					if (Math.random() <= enemyTypeProperties[enemys[_local1].typeID].firerate)
-					{
-						fireEnemyBullets(enemys[_local1],0);
-						enemys[_local1].lastFireFrames = 0;
-					}
-				}
-				else
-				{
-					trace("Enemy firerate not identified!!!!!!!!!! Something is weird!!!!!!!!!!!");
-				}
+				this.fireEnemyBullets(enemy,0);
 			}
-			_local1++;
+			i++;
 		}
 	}
 	function fireEnemyBullets($enemy, gunID)
 	{
-		var enemy = $enemy;
-		if (enemy.bulletNB >= (enemy.nbBullets - 1))
+		var enemy:OEnemy = $enemy;
+		if (enemy.bulletI >= (enemy.nbBullets - 1))
 		{
-			enemy.bulletNB = 0;
+			enemy.bulletI = 0;
 		}
 		else
 		{
-			enemy.bulletNB++;
+			enemy.bulletI++;
 		}
 		var _local3 = new Vector(0, 0);
 		_local3.x = enemy.mc.ship.bulletpoint0._x;
 		_local3.y = enemy.mc.ship.bulletpoint0._y;
 		enemy.mc.ship.localToGlobal(_local3);
 		arena.globalToLocal(_local3);
-		enemy.bullets[enemy.bulletNB].pos.x = _local3.x;
-		enemy.bullets[enemy.bulletNB].pos.y = -_local3.y;
+		enemy.bullets[enemy.bulletI].pos.x = _local3.x;
+		enemy.bullets[enemy.bulletI].pos.y = -_local3.y;
 
 		if (enemy.type == "SEEDPOD")
 		{
-			var randDegree = ((Math.random() * 90) - 45);
-			var aimCos = Math.cos((((enemy.phys.rot - 90) + randDegree) * Math.PI) / 180);
-			var aimSin = (-Math.sin((((enemy.phys.rot - 90) + randDegree) * Math.PI) / 180));
-			enemy.bullets[enemy.bulletNB].vel.x = aimCos * enemyTypeProperties[enemy.typeID].bulletVel;
-			enemy.bullets[enemy.bulletNB].vel.y = aimSin * enemyTypeProperties[enemy.typeID].bulletVel;
+			var randDegree:Number = ((Math.random() * 90) - 45);
+			var aimCos:Number = Math.cos((enemy.phys.rot - 90 + randDegree) * Math.PI / 180);
+			var aimSin:Number = -Math.sin((enemy.phys.rot - 90 + randDegree) * Math.PI / 180);
+			enemy.bullets[enemy.bulletI].vel.x = aimCos * enemy.propertie.bulletVel;
+			enemy.bullets[enemy.bulletI].vel.y = aimSin * enemy.propertie.bulletVel;
 		}
-		else if (enemyTypeProperties[enemy.typeID].accuracy < 0)
+		else if (enemy.propertie.accuracy < 0)
 		{
 			var vec:Vector = new Vector();
-			vec.x = hero.phys.pos.x - enemy.bullets[enemy.bulletNB].pos.x;
-			vec.y = hero.phys.pos.y - enemy.bullets[enemy.bulletNB].pos.y;
+			vec.x = hero.phys.pos.x - enemy.bullets[enemy.bulletI].pos.x;
+			vec.y = hero.phys.pos.y - enemy.bullets[enemy.bulletI].pos.y;
 			vec.normalize();
-			var adjustDegrees = (360 * (enemyTypeProperties[enemy.typeID].accuracy + 1));
+			var adjustDegrees = (360 * (enemy.propertie.accuracy + 1));
 			adjustDegrees = (Math.random() * adjustDegrees) - (adjustDegrees / 2);
 			var aimCos = Math.cos((adjustDegrees * Math.PI) / 180);
 			var aimSin = (-Math.sin((adjustDegrees * Math.PI) / 180));
 			var newX = ((vec.x * aimCos) + (vec.y * (-aimSin)));
 			var newY = ((vec.x * aimSin) + (vec.y * aimCos));
-			enemy.bullets[enemy.bulletNB].vel.x = newX * enemyTypeProperties[enemy.typeID].bulletVel;
-			enemy.bullets[enemy.bulletNB].vel.y = newY * enemyTypeProperties[enemy.typeID].bulletVel;
+			enemy.bullets[enemy.bulletI].vel.x = newX * enemy.propertie.bulletVel;
+			enemy.bullets[enemy.bulletI].vel.y = newY * enemy.propertie.bulletVel;
 
 		}
-		else if (enemyTypeProperties[enemy.typeID].accuracy >= 0)
+		else if (enemy.propertie.accuracy >= 0)
 		{
-			var aimCos = Math.cos((((enemyTypeProperties[enemy.typeID].accuracy + enemy.phys.rot) - 90) * Math.PI) / 180);
-			var aimSin = (-Math.sin((((enemyTypeProperties[enemy.typeID].accuracy + enemy.phys.rot) - 90) * Math.PI) / 180));
-			enemy.bullets[enemy.bulletNB].vel.x = aimCos * enemyTypeProperties[enemy.typeID].bulletVel;
-			enemy.bullets[enemy.bulletNB].vel.y = aimSin * enemyTypeProperties[enemy.typeID].bulletVel;
+			var aimCos = Math.cos(((enemy.propertie.accuracy + enemy.phys.rot - 90) * Math.PI) / 180);
+			var aimSin = -Math.sin(((enemy.propertie.accuracy + enemy.phys.rot - 90) * Math.PI) / 180);
+			enemy.bullets[enemy.bulletI].vel.x = aimCos * enemy.propertie.bulletVel;
+			enemy.bullets[enemy.bulletI].vel.y = aimSin * enemy.propertie.bulletVel;
 		}
-		enemy.bullets[enemy.bulletNB].state = 1;
-		enemy.bullets[enemy.bulletNB].mc.gotoAndStop(1);
-		enemy.bullets[enemy.bulletNB].mc._visible = true;
+		enemy.bullets[enemy.bulletI].state = 1;
+		enemy.bullets[enemy.bulletI].mc.gotoAndStop(1);
+		enemy.bullets[enemy.bulletI].mc._visible = true;
 
-		if (gunID < (enemyTypeProperties[enemy.typeID].nbGuns - 1))
+		if (gunID < (enemy.propertie.nbGuns - 1))
 		{
 			fireEnemyBullets(enemy,gunID + 1);
 		}
@@ -1134,29 +1047,19 @@
 	function updateEnemyBullets()
 	{
 		var i = 0;
+		var enemy:OEnemy;
 		while (i < enemys.length)
 		{
-			var j = 0;
-			var bullet;
-			while (j < enemys[i].nbBullets)
-			{
-				bullet = enemys[i].bullets[j];
-				if (bullet.state == 1)
-				{
-					bullet.pos.x += bullet.vel.x;
-					bullet.pos.y += bullet.vel.y;
-					bullet.mc._x = bullet.pos.x;
-					bullet.mc._y = -bullet.pos.y;
-				}
-				j++;
-			}
+			enemy = enemys[i];
+			enemy.updateBullets();
 			i++;
 		}
 	}
+
 	function checkKeys()
 	{
 		var _local1 = _parent;
-		if (Key.isDown(38))
+		if (Key.isDown(Key.UP))
 		{
 			if (hero.fuel > 0)
 			{
@@ -1166,7 +1069,7 @@
 					hero.phys.acc = 0.5;
 				}
 				setAcc(hero.phys,1);
-				hero.fuel = hero.fuel - 0.01;
+				hero.fuel -= 0.01;
 				_local1.statusbar.fuel.needle._rotation = (hero.fuel * -0.8) + 40;
 				if (hero.fuel <= 20)
 				{
@@ -1204,29 +1107,29 @@
 			theSounds.thrust.stop("thrust");
 			thrusting = false;
 		}
-		if (Key.isDown(39))
+		if (Key.isDown(39))//right
 		{
 			_local1.statusbar.light2.gotoAndStop("greenon");
 			setrotvel(hero.phys,10);
 		}
-		else if (Key.isDown(37))
+		else if (Key.isDown(37))//Left
 		{
 			_local1.statusbar.light1.gotoAndStop("greenon");
 			setrotvel(hero.phys,-10);
 		}
 		else
 		{
-			hero.phys.rotVel = 0;
+			setrotvel(hero.phys,0);
 		}
-		if (Key.isDown(39) == false)
+		if (!Key.isDown(39))//right
 		{
 			_local1.statusbar.light2.gotoAndStop("greenoff");
 		}
-		if (Key.isDown(37) == false)
+		if (!Key.isDown(37))//! Left
 		{
 			_local1.statusbar.light1.gotoAndStop("greenoff");
 		}
-		if (Key.isDown(17) || (Key.isDown(32)))
+		if (Key.isDown(17) || Key.isDown(32))//Ctrl or Space
 		{
 			if (hero.powerup == "AUTOFIRE")
 			{
@@ -1247,15 +1150,15 @@
 		{
 			FIREOK = true;
 		}
-		if (Key.isDown(81))
+		if (Key.isDown(81))//Q
 		{
 			hero.powerup = "AUTOFIRE";
 		}
-		if (Key.isDown(87))
+		if (Key.isDown(87))//W
 		{
 			hero.powerup = "DOUBLESHOT";
 		}
-		if (Key.isDown(69))
+		if (Key.isDown(69))//E
 		{
 			hero.powerup = "BACKFIRE";
 		}
@@ -1266,6 +1169,7 @@
 		hero.killAll();
 		hero.mc.gotoAndPlay("explode");
 		theSounds.explode.start();
+		theSounds.explode.setVolume(15);
 		//hero.lives--;
 		hero.powerup = 0;
 		randomMessage("HERODIE");
@@ -1422,7 +1326,7 @@
 	}
 	function fireOne(gunID, angle)
 	{
-		if (bulletNB >= (nbHeroBullets - 1))
+		if (bulletNB >= (hero.nbBullets - 1))
 		{
 			bulletNB = 0;
 		}
@@ -1442,17 +1346,17 @@
 		var bulletCos = Math.cos((angle * Math.PI) / 180);
 		var bulletSin = (-Math.sin((angle * Math.PI) / 180));
 
-		var NewX = ((bullet.vel.x * bulletCos) + (bullet.vel.y * (-bulletSin)));
-		var NewY = ((bullet.vel.x * bulletSin) + (bullet.vel.y * bulletCos));
+		var NewX:Number = (bullet.vel.x * bulletCos) + (bullet.vel.y * (-bulletSin));
+		var NewY:Number = (bullet.vel.x * bulletSin) + (bullet.vel.y * bulletCos);
 
 		bullet.vel.x = NewX;
 		bullet.vel.y = NewY;
 		bullet.state = 1;
 		bullet.mc._visible = true;
 	}
-	function triggerActivate(triggerID)
+	function triggerActivate(triggerID:Number)
 	{
-		var _local1 = triggerID;
+		var _local1:Number = triggerID;
 		trace("Det var da vist en trigger!!!");
 		if (_local1 == 0)
 		{
@@ -1526,12 +1430,14 @@
 		var roomI:Number = roomID;
 		trace("Saving room state");
 		var j:Number = 0;
+		var savedEnemy:OSavedEnemy;
+		var enemy:OEnemy;
 		while (j < enemys.length)
 		{
-			savedRoom[roomI].enemys[j] = new OSavedEnemy();
-			savedRoom[roomI].enemys[j].state = enemys[j].state;
-			savedRoom[roomI].enemys[j].hitpoints = enemys[j].hitpoints;
-			savedRoom[roomI].enemys[j].type = enemys[j].type;
+			savedEnemy = new OSavedEnemy();
+			savedRoom[roomI].enemys[j] = savedEnemy;
+			enemy = enemys[j];
+			savedEnemy.save(enemy);
 			j++;
 		}
 	}
@@ -1540,17 +1446,11 @@
 		var roomI:Number = roomID;
 		trace("Loading room state");
 		var i:Number = 0;
+		var enemy:OEnemy;
 		while (i < enemys.length)
 		{
-			enemys[i].state = savedRoom[roomI].enemys[i].state;
-			enemys[i].hitpoints = savedRoom[roomI].enemys[i].hitpoints;
-			enemys[i].type = savedRoom[roomI].enemys[i].type;
-			trace((("Enemy id : " + i) + "   State : ") + savedRoom[roomI].enemys[i].state);
-			if (enemys[i].state == 0)
-			{
-				enemys[i].mc.stop();
-				enemys[i].mc.ship.gotoAndStop("dead");
-			}
+			enemy = enemys[i];
+			enemy.load( savedRoom[roomI].enemys[i]);
 			i++;
 		}
 		i = 0;

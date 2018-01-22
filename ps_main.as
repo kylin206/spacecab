@@ -524,7 +524,7 @@ function initEnemys()
 				}
 				tt++;
 			}
-			enemy.bulletNB = 0;
+			enemy.bulletI = 0;
 			enemy.lastFireFrames = 0;
 			enemy.state = 1;
 			enemy.mc.gotoAndPlay(1);
