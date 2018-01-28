@@ -23,26 +23,32 @@
 		this.phys = this.createPhys();
 		this.mc = mc;
 		this.hitpoints = [];
-		
+
 		var t:Number = 0;
 		while (t < 4)
 		{
 			this.hitpoints[t] = new Vector(0, 0);
 			t++;
 		}
-		
+
 		this.state = state;
 		this.color = color;
-		this.weight = weight;
-		this.maxWeight = maxWeight;
+		this.weight = 0;
+		this.maxWeight = 3;
 		this.cargo = [];
 		this.bullets = new Array(nbBullets);
-		this.lives = lives;
-		this.score = score;
-		this.fuel = fuel;
-		this.powerup = powerup;
+		this.lives = 3;
+		this.score = 0;
+		this.fuel = 99;
+		this.powerup = 0;
 	}
 	
+	public function initMC(mc:MovieClip):Void
+	{
+		this.mc = mc;
+		this.mc.exhaust._visible = false;
+	}
+
 	public function initBullets(arena:MovieClip):Void
 	{
 		this.bullets = new Array(this.nbBullets);
@@ -57,10 +63,9 @@
 		}
 	}
 
-	
-	
-	
-	public function update(arena:MovieClip,level:Number,triggers:Array,GRAVITY:Number):Void{
+	public function update(level:Number,triggers:Array,GRAVITY:Number):Void
+	{
+		var arena = _global.arena;
 		var phys:OPhys = this.phys;
 		if (this.state == "FLYING")
 		{
@@ -73,7 +78,7 @@
 			vel.y *= 0.98;
 			vel.x += phys.acc * heroCos;
 			vel.y += phys.acc * heroSin + (GRAVITY * ((this.weight / 2) + 1));
-			
+
 			if (level == 4 && (phys.pos.x < arena.blackhole0._x))
 			{
 				var t = 0;
@@ -84,7 +89,7 @@
 					tmpBlackvector.x = phys.pos.x - tmpBlackholeMC._x;
 					tmpBlackvector.y = phys.pos.y + tmpBlackholeMC._y;
 					var dist:Number = (tmpBlackvector.x * tmpBlackvector.x) + (tmpBlackvector.y * tmpBlackvector.y);
-					
+
 					if (dist < 22500)
 					{
 						var holepower:Number = (dist / 22500) - 1;
@@ -124,7 +129,7 @@
 		phys.maxVel = 1;
 		return phys;
 	}
-	
+
 	public function clearBullets():Void
 	{
 		var bullet:OBullet;
@@ -137,4 +142,35 @@
 		}
 	}
 
+	private var bulletNB:Number = 0;
+	public function fireOne(gunID:Number, angle:Number):Void
+	{
+		if (bulletNB >= (nbBullets - 1))
+		{
+			bulletNB = 0;
+		}
+		else
+		{
+			bulletNB++;
+		}
+		var tmpGun = this.mc["bulletpoint" + gunID];
+		var bullet=bullets[bulletNB];
+
+		bullet.pos.x = (this.phys.pos.x + (tmpGun._x * heroSin)) + ((-tmpGun._y) * heroCos);
+		bullet.pos.y = (this.phys.pos.y + ((-tmpGun._x) * heroCos)) + ((-tmpGun._y) * heroSin);
+
+		bullet.vel.x = (this.phys.vel.x / 4) + (10 * heroCos);
+		bullet.vel.y = (this.phys.vel.y / 4) + (10 * heroSin);
+
+		var bulletCos = Math.cos((angle * Math.PI) / 180);
+		var bulletSin = (-Math.sin((angle * Math.PI) / 180));
+
+		var NewX:Number = (bullet.vel.x * bulletCos) + (bullet.vel.y * (-bulletSin));
+		var NewY:Number = (bullet.vel.x * bulletSin) + (bullet.vel.y * bulletCos);
+
+		bullet.vel.x = NewX;
+		bullet.vel.y = NewY;
+		bullet.state = 1;
+		bullet.mc._visible = true;
+	}
 }

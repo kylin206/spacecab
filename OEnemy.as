@@ -133,4 +133,66 @@
 			this.mc.ship.gotoAndStop("dead");
 		}
 	}
+
+	public function fireEnemyBullets(gunID:Number,hero:OShip):Void
+	{
+		if (this.bulletI >= (this.nbBullets - 1))
+		{
+			this.bulletI = 0;
+		}
+		else
+		{
+			this.bulletI++;
+		}
+		var _local3 = new Vector(0, 0);
+		_local3.x = this.mc.ship.bulletpoint0._x;
+		_local3.y = this.mc.ship.bulletpoint0._y;
+		this.mc.ship.localToGlobal(_local3);
+		_global.arena.globalToLocal(_local3);
+		this.bullets[this.bulletI].pos.x = _local3.x;
+		this.bullets[this.bulletI].pos.y = -_local3.y;
+
+		if (this.type == "SEEDPOD")
+		{
+			var randDegree:Number = (Math.random() * 90) - 45;
+			var aimCos:Number = Math.cos((this.phys.rot - 90 + randDegree) * Math.PI / 180);
+			var aimSin:Number = -Math.sin((this.phys.rot - 90 + randDegree) * Math.PI / 180);
+			this.bullets[this.bulletI].vel.x = aimCos * this.propertie.bulletVel;
+			this.bullets[this.bulletI].vel.y = aimSin * this.propertie.bulletVel;
+		}
+		else if (this.propertie.accuracy < 0)
+		{
+			var vec:Vector = new Vector();
+			vec.x = hero.phys.pos.x - this.bullets[this.bulletI].pos.x;
+			vec.y = hero.phys.pos.y - this.bullets[this.bulletI].pos.y;
+			vec.normalize();
+			var adjustDegrees = 360 * (this.propertie.accuracy + 1);
+			adjustDegrees = (Math.random() * adjustDegrees) - (adjustDegrees / 2);
+			var aimCos = Math.cos((adjustDegrees * Math.PI) / 180);
+			var aimSin = -Math.sin((adjustDegrees * Math.PI) / 180);
+			var newX = (vec.x * aimCos) + (vec.y * (-aimSin));
+			var newY = (vec.x * aimSin) + (vec.y * aimCos);
+			this.bullets[this.bulletI].vel.x = newX * this.propertie.bulletVel;
+			this.bullets[this.bulletI].vel.y = newY * this.propertie.bulletVel;
+		}
+		else if (this.propertie.accuracy >= 0)
+		{
+			var aimCos = Math.cos(((this.propertie.accuracy + this.phys.rot - 90) * Math.PI) / 180);
+			var aimSin = -Math.sin(((this.propertie.accuracy + this.phys.rot - 90) * Math.PI) / 180);
+			this.bullets[this.bulletI].vel.x = aimCos * this.propertie.bulletVel;
+			this.bullets[this.bulletI].vel.y = aimSin * this.propertie.bulletVel;
+		}
+		this.bullets[this.bulletI].state = 1;
+		this.bullets[this.bulletI].mc.gotoAndStop(1);
+		this.bullets[this.bulletI].mc._visible = true;
+
+		if (gunID < (this.propertie.nbGuns - 1))
+		{
+			this.fireEnemyBullets(gunID + 1,hero);
+		}
+		else
+		{
+			_global.theSounds.heroshoot.start();
+		}
+	}
 }

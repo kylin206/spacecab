@@ -8,9 +8,8 @@
 	var arena;
 	var _quality;
 	var GRAVITY:Number = -0.15;
-	var enemyTypeProperties:Array;
+	var enemyTypeProperties:EnemyTypeProperties;
 	var level:Number = 0;
-	var bulletNB:Number = 0;
 	var dropCrateOK:Boolean = false;
 	var savedRoom:Array = [];
 	var doors:Array = [];
@@ -50,7 +49,6 @@
 
 	function Main()
 	{
-		trace(0);
 		this.loadLevels();
 	}
 
@@ -103,143 +101,16 @@
 		trace("initGame function started!");
 		trace("Dette er main ja det er så!!!!!!!!!!!!!! " + this);
 		this._quality = _parent._parent._parent.dataholder.gameQuality;
-		enemyTypeProperties = new Array();
-		var etp0:OEnemyTypeProperties = new OEnemyTypeProperties();
-		var etp1:OEnemyTypeProperties = new OEnemyTypeProperties();
-		var etp2:OEnemyTypeProperties = new OEnemyTypeProperties();
-		var etp3:OEnemyTypeProperties = new OEnemyTypeProperties();
-		var etp4:OEnemyTypeProperties = new OEnemyTypeProperties();
-		var etp5:OEnemyTypeProperties = new OEnemyTypeProperties();
-		var etp6:OEnemyTypeProperties = new OEnemyTypeProperties();
-		var etp7:OEnemyTypeProperties = new OEnemyTypeProperties();
-		enemyTypeProperties.push(etp0);
-		enemyTypeProperties.push(etp1);
-		enemyTypeProperties.push(etp2);
-		enemyTypeProperties.push(etp3);
-		enemyTypeProperties.push(etp4);
-		enemyTypeProperties.push(etp5);
-		enemyTypeProperties.push(etp6);
-		enemyTypeProperties.push(etp7);
-		etp0.id = 0;
-		etp0.type = "BOA";
-		etp0.hitpoints = 10;
-		etp0.bulletType = "bulletred";
-		etp0.bulletVel = 4;
-		etp0.nbBullets = 5;
-		etp0.nbGuns = 1;
-		etp0.firerate = 50;
-		etp0.accuracy = -0.0001;
-		etp0.fireSound = "fireBOA";
-		etp0.hitSound = "bullethitter";
-		etp0.points = 50;
+		this.enemyTypeProperties = new EnemyTypeProperties();
 
-		etp1.id = 1;
-		etp1.type = "WORMDOWN";
-		etp1.hitpoints = 7;
-		etp1.bulletType = "bulletgreen";
-		etp1.bulletVel = 4;
-		etp1.nbBullets = 4;
-		etp1.nbGuns = 1;
-		etp1.firerate = 50;
-		etp1.accuracy = 180;
-		etp1.fireSound = "fire1";
-		etp1.hitSound = "hit1";
-		etp1.points = 25;
-
-		etp2.id = 2;
-		etp2.type = "BOSS";
-		etp2.hitpoints = 40;
-		etp2.bulletType = "bulletred";
-		etp2.bulletVel = 8;
-		etp2.nbBullets = 25;
-		etp2.nbGuns = 1;
-		etp2.firerate = 50;
-		etp2.accuracy = -1;
-		etp2.fireSound = "fireBOA";
-		etp2.hitSound = "bullethitter";
-		etp2.points = 500;
-
-		etp3.id = 3;
-		etp3.type = "BOSSARM";
-		etp3.hitpoints = 5;
-		etp3.bulletType = "bulletgreen";
-		etp3.bulletVel = 6;
-		etp3.nbBullets = 12;
-		etp3.nbGuns = 1;
-		etp3.firerate = 0.04;
-		etp3.accuracy = -0.05;
-		etp3.fireSound = "fireBOA";
-		etp3.hitSound = "bullethitter";
-		etp3.points = 50;
-
-		etp4.id = 4;
-		etp4.type = "SEEDPOD";
-		etp4.hitpoints = 7;
-		etp4.bulletType = "bulletgreen";
-		etp4.bulletVel = 4;
-		etp4.nbBullets = 10;
-		etp4.nbGuns = 4;
-		etp4.firerate = 50;
-		etp4.accuracy = 0;
-		etp4.fireSound = "fire1";
-		etp4.hitSound = "hit1";
-		etp4.points = 70;
-
-		etp5.id = 5;
-		etp5.type = "FLY";
-		etp5.hitpoints = 3;
-		etp5.bulletType = "bulletgreen";
-		etp5.bulletVel = 4;
-		etp5.nbBullets = 10;
-		etp5.nbGuns = 1;
-		etp5.firerate = 50;
-		etp5.accuracy = -1;
-		etp5.fireSound = "fire1";
-		etp5.hitSound = "hit1";
-		etp5.points = 100;
-
-		etp6.id = 6;
-		etp6.type = "WORMRIGHT";
-		etp6.hitpoints = 10;
-		etp6.bulletType = "bulletgreen";
-		etp6.bulletVel = 4;
-		etp6.nbBullets = 4;
-		etp6.nbGuns = 1;
-		etp6.firerate = 30;
-		etp6.accuracy = 90;
-		etp6.fireSound = "fire1";
-		etp6.hitSound = "hit1";
-		etp6.points = 30;
-
-		etp7.id = 7;
-		etp7.type = "WORMLEFT";
-		etp7.hitpoints = 10;
-		etp7.bulletType = "bulletgreen";
-		etp7.bulletVel = 4;
-		etp7.nbBullets = 4;
-		etp7.nbGuns = 1;
-		etp7.firerate = 30;
-		etp7.accuracy = 270;
-		etp7.fireSound = "fire1";
-		etp7.hitSound = "hit1";
-		etp7.points = 30;
-		
-		hero.mc = arena.heroholder;
-		hero.mc.exhaust._visible = false;
+		this.hero.initMC(arena.heroholder);
 		trace("Creating bullets");
 		hero.initBullets(arena);
 		bullets = hero.bullets;
-		
+
 		initSound();
 		level = 1;
-		bulletNB = 0;
 		dropCrateOK = true;
-		hero.lives = 3;
-		hero.score = 0;
-		hero.fuel = 99;
-		hero.weight = 0;
-		hero.powerup = 0;
-		hero.maxWeight = 3;
 		hero.killAll();
 		gameSuccess = false;
 		nbLevels = arena.nbLevels;
@@ -283,11 +154,15 @@
 		initLevel(level);
 		heroRespawn();
 		initTimer();
+
+		_global.arena = arena;
+		_global.theSounds = theSounds;
 	}
+
 	function initLevel(newLevel)
 	{
 		trace("Next level");
-		level = newLevel;
+		this.level = newLevel;
 		arena.gotoAndStop(level);
 		initEnemys();
 		NBplatforms = 0;
@@ -350,7 +225,7 @@
 			}
 			t++;
 		}
-		if (firstTimeInRoom[level] == false)
+		if (!firstTimeInRoom[level])
 		{
 			loadRoomState(level);
 		}
@@ -501,6 +376,7 @@
 		_parent.statusbar.posx = hero.phys.pos.x;
 		_parent.statusbar.posy = hero.phys.pos.y;
 	}
+
 	function exitLevel()
 	{
 		saveRoomState(level);
@@ -551,12 +427,14 @@
 				}
 				trace("Initialising enemy number " + t + ". Type = \"" + enemy.type + "\"");
 				var tt = 0;
-				while (tt < enemyTypeProperties.length)
+				var prop:OEnemyTypeProperties;
+				while (tt < this.enemyTypeProperties.counts)
 				{
-					if (enemyTypeProperties[tt].type == enemy.type)
+					prop = this.enemyTypeProperties.getPropertie(tt);
+					if (prop.type == enemy.type)
 					{
 						enemy.typeID = tt;
-						enemy.setProp(enemyTypeProperties[tt]);
+						enemy.setProp(prop);
 						break;
 					}
 					tt++;
@@ -575,7 +453,7 @@
 	}
 	function updateHero()
 	{
-		this.hero.update(arena, level, triggers, GRAVITY);
+		this.hero.update(level, triggers, GRAVITY);
 		this.heroCos = this.hero.heroCos;
 		this.heroSin = this.hero.heroSin;
 	}
@@ -603,18 +481,18 @@
 		else if (level == 2)
 		{
 
-			if (hero.mc.center.hitTest(arena.changelevel0) == true)
+			if (hero.mc.center.hitTest(arena.changelevel0))
 			{
 				changeLevel(3);
 			}
-			else if (hero.mc.center.hitTest(arena.changelevel1) == true)
+			else if (hero.mc.center.hitTest(arena.changelevel1))
 			{
 				changeLevel(1);
 			}
 		}
 		else if (level == 3)
 		{
-			if (hero.mc.center.hitTest(arena.changelevel0) == true)
+			if (hero.mc.center.hitTest(arena.changelevel0))
 			{
 				changeLevel(2);
 			}
@@ -639,9 +517,9 @@
 		}
 		else if (level == 6)
 		{
-			//if (doors[3].state == 1)
+			if (doors[3].state == 1)
 			{
-				if (hero.mc.center.hitTest(arena.changelevel0) == true)
+				if (hero.mc.center.hitTest(arena.changelevel0))
 				{
 					changeLevel(1);
 				}
@@ -650,13 +528,12 @@
 	}
 	function changeLevel(newLevel)
 	{
-		var _local1 = newLevel;
 		trace("Level was : " + level);
-		trace("Level is now : " + _local1);
-		localposX = (hero.phys.pos.x + arena.offsetX[level]) - arena.offsetX[_local1];
-		localposY = (hero.phys.pos.y + arena.offsetY[level]) - arena.offsetY[_local1];
+		trace("Level is now : " + newLevel);
+		localposX = (hero.phys.pos.x + arena.offsetX[level]) - arena.offsetX[newLevel];
+		localposY = (hero.phys.pos.y + arena.offsetY[level]) - arena.offsetY[newLevel];
 		exitLevel();
-		initLevel(_local1);
+		initLevel(newLevel);
 		placeHero();
 	}
 	function checkShipHit()
@@ -830,8 +707,7 @@
 							if (enemys[j].state == 1)
 							{
 								enemys[j].hitpoints--;
-								
-								
+
 								trace("hp:"+enemys[j].hitpoints)
 							}
 							if (enemys[j].hitpoints <= 0)
@@ -839,7 +715,7 @@
 								enemys[j].state = 0;
 								enemys[j].mc.stop();
 								enemys[j].mc.ship.gotoAndPlay("explode");
-								hero.score = hero.score + enemyTypeProperties[enemys[j].typeID].points;
+								hero.score = hero.score + this.enemyTypeProperties.getPropertie(enemys[j].typeID).points;
 								_parent.statusbar.score = hero.score;
 								randomMessage("SHOOTENEMY");
 								if ((level == 6) && (j == 0))
@@ -975,72 +851,9 @@
 			enemy = this.enemys[i];
 			if (enemy.checkFire())
 			{
-				this.fireEnemyBullets(enemy,0);
+				enemy.fireEnemyBullets(0,hero);
 			}
 			i++;
-		}
-	}
-	function fireEnemyBullets($enemy, gunID)
-	{
-		var enemy:OEnemy = $enemy;
-		if (enemy.bulletI >= (enemy.nbBullets - 1))
-		{
-			enemy.bulletI = 0;
-		}
-		else
-		{
-			enemy.bulletI++;
-		}
-		var _local3 = new Vector(0, 0);
-		_local3.x = enemy.mc.ship.bulletpoint0._x;
-		_local3.y = enemy.mc.ship.bulletpoint0._y;
-		enemy.mc.ship.localToGlobal(_local3);
-		arena.globalToLocal(_local3);
-		enemy.bullets[enemy.bulletI].pos.x = _local3.x;
-		enemy.bullets[enemy.bulletI].pos.y = -_local3.y;
-
-		if (enemy.type == "SEEDPOD")
-		{
-			var randDegree:Number = ((Math.random() * 90) - 45);
-			var aimCos:Number = Math.cos((enemy.phys.rot - 90 + randDegree) * Math.PI / 180);
-			var aimSin:Number = -Math.sin((enemy.phys.rot - 90 + randDegree) * Math.PI / 180);
-			enemy.bullets[enemy.bulletI].vel.x = aimCos * enemy.propertie.bulletVel;
-			enemy.bullets[enemy.bulletI].vel.y = aimSin * enemy.propertie.bulletVel;
-		}
-		else if (enemy.propertie.accuracy < 0)
-		{
-			var vec:Vector = new Vector();
-			vec.x = hero.phys.pos.x - enemy.bullets[enemy.bulletI].pos.x;
-			vec.y = hero.phys.pos.y - enemy.bullets[enemy.bulletI].pos.y;
-			vec.normalize();
-			var adjustDegrees = (360 * (enemy.propertie.accuracy + 1));
-			adjustDegrees = (Math.random() * adjustDegrees) - (adjustDegrees / 2);
-			var aimCos = Math.cos((adjustDegrees * Math.PI) / 180);
-			var aimSin = (-Math.sin((adjustDegrees * Math.PI) / 180));
-			var newX = ((vec.x * aimCos) + (vec.y * (-aimSin)));
-			var newY = ((vec.x * aimSin) + (vec.y * aimCos));
-			enemy.bullets[enemy.bulletI].vel.x = newX * enemy.propertie.bulletVel;
-			enemy.bullets[enemy.bulletI].vel.y = newY * enemy.propertie.bulletVel;
-
-		}
-		else if (enemy.propertie.accuracy >= 0)
-		{
-			var aimCos = Math.cos(((enemy.propertie.accuracy + enemy.phys.rot - 90) * Math.PI) / 180);
-			var aimSin = -Math.sin(((enemy.propertie.accuracy + enemy.phys.rot - 90) * Math.PI) / 180);
-			enemy.bullets[enemy.bulletI].vel.x = aimCos * enemy.propertie.bulletVel;
-			enemy.bullets[enemy.bulletI].vel.y = aimSin * enemy.propertie.bulletVel;
-		}
-		enemy.bullets[enemy.bulletI].state = 1;
-		enemy.bullets[enemy.bulletI].mc.gotoAndStop(1);
-		enemy.bullets[enemy.bulletI].mc._visible = true;
-
-		if (gunID < (enemy.propertie.nbGuns - 1))
-		{
-			fireEnemyBullets(enemy,gunID + 1);
-		}
-		else
-		{
-			theSounds.heroshoot.start();
 		}
 	}
 
@@ -1287,7 +1100,7 @@
 #include "randomMessage.txt"
 	}
 
-	function setAcc(phys:OPhys, val)
+	function setAcc(phys:OPhys, val:Number):Void
 	{
 		phys.acc += (val * 0.06);
 		if (phys.acc > phys.maxAcc)
@@ -1301,7 +1114,7 @@
 
 	}
 
-	function setrotvel(phys:OPhys, val)
+	function setrotvel(phys:OPhys, val:Number):Void
 	{
 		phys.rotVel = val;
 	}
@@ -1310,50 +1123,21 @@
 	{
 		if (hero.powerup == "DOUBLESHOT")
 		{
-			fireOne(2,0);
-			fireOne(3,0);
+			hero.fireOne(2,0);
+			hero.fireOne(3,0);
 		}
 		else if (hero.powerup == "BACKFIRE")
 		{
-			fireOne(0,0);
-			fireOne(1,180);
+			hero.fireOne(0,0);
+			hero.fireOne(1,180);
 		}
 		else
 		{
-			fireOne(0,0);
+			hero.fireOne(0,0);
 		}
 		theSounds.heroshoot.start();
 	}
-	function fireOne(gunID, angle)
-	{
-		if (bulletNB >= (hero.nbBullets - 1))
-		{
-			bulletNB = 0;
-		}
-		else
-		{
-			bulletNB++;
-		}
-		var tmpGun = this.hero.mc["bulletpoint" + gunID];
-		var bullet=bullets[bulletNB];
 
-		bullet.pos.x = (hero.phys.pos.x + (tmpGun._x * heroSin)) + ((-tmpGun._y) * heroCos);
-		bullet.pos.y = (hero.phys.pos.y + ((-tmpGun._x) * heroCos)) + ((-tmpGun._y) * heroSin);
-
-		bullet.vel.x = (hero.phys.vel.x / 4) + (10 * heroCos);
-		bullet.vel.y = (hero.phys.vel.y / 4) + (10 * heroSin);
-
-		var bulletCos = Math.cos((angle * Math.PI) / 180);
-		var bulletSin = (-Math.sin((angle * Math.PI) / 180));
-
-		var NewX:Number = (bullet.vel.x * bulletCos) + (bullet.vel.y * (-bulletSin));
-		var NewY:Number = (bullet.vel.x * bulletSin) + (bullet.vel.y * bulletCos);
-
-		bullet.vel.x = NewX;
-		bullet.vel.y = NewY;
-		bullet.state = 1;
-		bullet.mc._visible = true;
-	}
 	function triggerActivate(triggerID:Number)
 	{
 		var _local1:Number = triggerID;
@@ -1509,32 +1293,7 @@
 	}
 	function initSound()
 	{
-		var _local1 = this;
-		theSounds = new o_sounds();
-		theSounds.heroshoot = new Sound(_local1);
-		theSounds.heroshoot.attachSound("heroshoot");
-		theSounds.bullethitter = new Sound(_local1);
-		theSounds.bullethitter.attachSound("bullethitter");
-		theSounds.explode = new Sound(_local1);
-		theSounds.explode.attachSound("explode");
-		theSounds.explodeshort = new Sound(_local1);
-		theSounds.explodeshort.attachSound("explodeshort");
-		theSounds.gameover = new Sound(_local1);
-		theSounds.gameover.attachSound("gameover");
-		theSounds.levelcompleted = new Sound(_local1);
-		theSounds.levelcompleted.attachSound("levelcompleted");
-		theSounds.pickup = new Sound(_local1);
-		theSounds.pickup.attachSound("pickup");
-		theSounds.deliver = new Sound(_local1);
-		theSounds.deliver.attachSound("deliver");
-		theSounds.thrust = new Sound(_local1);
-		theSounds.thrust.attachSound("thrust");
-		theSounds.door = new Sound(_local1);
-		theSounds.door.attachSound("door");
-		theSounds.door.onSoundComplete = function()
-		{
-			theSounds.door.setVolume(100);
-		};
+		theSounds = new o_sounds(this);
 	}
 	function turnOffSound()
 	{
@@ -1562,6 +1321,7 @@
 			randomMessage("IDLE");
 		}
 	}
+
 	function protKillAll()
 	{
 		var _local1 = this;
@@ -1575,28 +1335,6 @@
 		_local2.statusbar.light2.gotoAndStop("greenoff");
 		theSounds.thrust.stop("thrust");
 		thrusting = false;
-	}
-
-	function o_sounds(heroshoot, bullethitter, explode, gameover, levelcompleted, pickup, deliver, thrust, door)
-	{
-		var _local1 = this;
-		_local1.heroshoot = heroshoot;
-		_local1.bullethitter = bullethitter;
-		_local1.explode = explode;
-		_local1.gameover = gameover;
-		_local1.levelcompleted = levelcompleted;
-		_local1.pickup = pickup;
-		_local1.deliver = deliver;
-		_local1.thrust = thrust;
-		_local1.door = door;
-	}
-	function distPoints(x1, y1, x2, y2)
-	{
-		var _local3 = (x1 - x2) * (x1 - x2);
-		var _local1 = (y1 - y2) * (y1 - y2);
-		var _local2 = Math.sqrt(_local3 + _local1);
-		return (_local2);
-		return (_local3);
 	}
 
 }
