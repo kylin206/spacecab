@@ -177,6 +177,7 @@
 			}
 			else
 			{
+				trace("found platform" + t)
 				NBplatforms++;
 			}
 			t++;
@@ -530,8 +531,18 @@
 	{
 		trace("Level was : " + level);
 		trace("Level is now : " + newLevel);
+
 		localposX = (hero.phys.pos.x + arena.offsetX[level]) - arena.offsetX[newLevel];
 		localposY = (hero.phys.pos.y + arena.offsetY[level]) - arena.offsetY[newLevel];
+
+		trace("offsetX " + level + "   " + arena.offsetX[level])
+		trace("offsetY " + level + "   " + arena.offsetY[level])
+
+		trace("offsetX " + newLevel + "   " + arena.offsetX[newLevel])
+		trace("offsetY " + newLevel + "   " + arena.offsetY[newLevel])
+
+		trace(localposX+":"+localposY)
+
 		exitLevel();
 		initLevel(newLevel);
 		placeHero();
@@ -1211,19 +1222,9 @@
 	}
 	function saveRoomState(roomID:Number)
 	{
-		var roomI:Number = roomID;
+		var savedRoom:OSavedRoom = this.savedRoom[roomID];
 		trace("Saving room state");
-		var j:Number = 0;
-		var savedEnemy:OSavedEnemy;
-		var enemy:OEnemy;
-		while (j < enemys.length)
-		{
-			savedEnemy = new OSavedEnemy();
-			savedRoom[roomI].enemys[j] = savedEnemy;
-			enemy = enemys[j];
-			savedEnemy.save(enemy);
-			j++;
-		}
+		savedRoom.save(enemys);
 	}
 	function loadRoomState(roomID:Number)
 	{
@@ -1231,16 +1232,19 @@
 		trace("Loading room state");
 		var i:Number = 0;
 		var enemy:OEnemy;
+		var _savedRoom:OSavedRoom;
 		while (i < enemys.length)
 		{
+			_savedRoom = savedRoom[roomI];
 			enemy = enemys[i];
-			enemy.load( savedRoom[roomI].enemys[i]);
+			enemy.load(_savedRoom.getSavedEnemy(i));
 			i++;
 		}
 		i = 0;
 		while (i < nbCrates)
 		{
-			if (savedRoom[roomI].crates[i] == 0)
+			_savedRoom = savedRoom[roomI];
+			if (_savedRoom.crates[i] == 0)
 			{
 				this.arena["crate" + i]. _visible = false;
 			}
