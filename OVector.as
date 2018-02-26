@@ -1,9 +1,9 @@
-﻿class Vector
+﻿class OVector
 {
 	public var x:Number = 0;
 	public var y:Number = 0;
 
-	function Vector(x:Number, y:Number)
+	function OVector(x:Number, y:Number)
 	{
 		this.x = x;
 		this.y = y;
@@ -15,13 +15,13 @@
 		this.y = y;
 	}
 	
-	public function subtract(vec:Vector):Void
+	public function subtract(vec:OVector):Void
 	{
 		this.x -= vec.x;
 		this.y -= vec.y;
 	}
 
-	public function add(vec:Vector):Void
+	public function add(vec:OVector):Void
 	{
 		this.x += vec.x;
 		this.y += vec.y;
@@ -39,9 +39,9 @@
 		return Math.sqrt(this.x * this.x + this.y * this.y);
 	}
 
-	public function clone():Vector
+	public function clone():OVector
 	{
-		return new Vector(this.x,this.y);
+		return new OVector(this.x,this.y);
 	}
 
 	public function toString():String

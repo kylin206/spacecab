@@ -6,7 +6,7 @@
 	public var hitpoints:Number;
 	public var type:String = "";
 	public var typeID:Number = 0;
-	public var state:Number = 0;
+	private var _state:Number = 0;
 	public var bullets:Array;
 	public var bulletType:String = "";
 	public var bulletVel:Number = 0;
@@ -26,9 +26,14 @@
 		this.phys.rot = mc._rotation;
 		this.bulletI = 0;
 		this.lastFireFrames = 0;
-		this.state = 1;
+		this._state = 1;
 	}
 
+	public function get state():Number
+	{
+		return this._state;
+	}
+	
 	public function setProp(propertie:OEnemyTypeProperties):Void
 	{
 		trace("Enemy setProp" +propertie)
@@ -58,7 +63,7 @@
 	public function checkFire():Boolean
 	{
 		var result:Boolean = false;
-		if (this.state == 1)
+		if (this._state == 1)
 		{
 			this.lastFireFrames++;
 			if (propertie.firerate == "ONSIGHT")
@@ -85,10 +90,7 @@
 			}
 			else
 			{
-
 				trace("---------------------------------------------")
-				trace(propertie)
-
 				trace("enemy firerate not identified!!!!!!!!!! Something is weird!!!!!!!!!!!  " +propertie.firerate);
 			}
 		}
@@ -122,12 +124,12 @@
 
 	public function load(senemy:OSavedEnemy):Void
 	{
-		this.state = senemy.state;
+		this._state = senemy.state;
 		this.hitpoints = senemy.hitpoints;
 		this.type = senemy.type;
 		this.propertie = senemy.propertie;
-		trace("Enemy id : " + id + "   State : " + senemy.state);
-		if (this.state == 0)
+		trace("load Enemy id : " + id + "   state : " + senemy.state);
+		if (this._state == 0)
 		{
 			this.mc.stop();
 			this.mc.ship.gotoAndStop("dead");
@@ -144,7 +146,7 @@
 		{
 			this.bulletI++;
 		}
-		var _local3 = new Vector(0, 0);
+		var _local3 = new OVector(0, 0);
 		_local3.x = this.mc.ship.bulletpoint0._x;
 		_local3.y = this.mc.ship.bulletpoint0._y;
 		this.mc.ship.localToGlobal(_local3);
@@ -162,7 +164,7 @@
 		}
 		else if (this.propertie.accuracy < 0)
 		{
-			var vec:Vector = new Vector();
+			var vec:OVector = new OVector();
 			vec.x = hero.phys.pos.x - this.bullets[this.bulletI].pos.x;
 			vec.y = hero.phys.pos.y - this.bullets[this.bulletI].pos.y;
 			vec.normalize();

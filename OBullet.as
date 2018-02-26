@@ -1,18 +1,18 @@
 ﻿class OBullet
 {
-	public var pos:Vector;
-	public var vel:Vector;
+	public var pos:OVector;
+	public var vel:OVector;
 	public var mc:MovieClip;
 	public var state:Number = 0;
-	public var screenPos:Vector;
+	public var screenPos:OVector;
 
 	public function OBullet(mc:MovieClip)
 	{
 		this.mc = mc;
 		mc._visible = false;
-		this.pos = new Vector(-10, -10);
-		this.vel = new Vector(0, 0);
-		this.screenPos = new Vector(0, 0);
+		this.pos = new OVector(-10, -10);
+		this.vel = new OVector(0, 0);
+		this.screenPos = new OVector(0, 0);
 		this.state = 0;
 	}
 	public function dispose():Void

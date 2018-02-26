@@ -11,7 +11,7 @@
 	var enemyTypeProperties:EnemyTypeProperties;
 	var level:Number = 0;
 	var dropCrateOK:Boolean = false;
-	var savedRoom:Array = [];
+	var savedRooms:Array = [];
 	var doors:Array = [];
 	var triggers:Array = [];
 	var enemys:Array = [];
@@ -129,12 +129,12 @@
 			t++;
 		}
 		firstTimeInRoom = new Array();
-		savedRoom = new Array();
+		savedRooms = new Array();
 		var t = 1;
 		while (t <= nbLevels)
 		{
 			firstTimeInRoom[t] = true;
-			savedRoom[t] = new OSavedRoom();
+			savedRooms[t] = new OSavedRoom();
 			t++;
 		}
 		doors = new Array();
@@ -278,27 +278,27 @@
 			{
 				arena.triggerlight.blink.gotoAndStop(1);
 			}
-			if ((savedRoom[6].enemys[0].state != 0) && (triggers[2] == 1))
+			if ((savedRooms[6].enemys[0].state != 0) && (triggers[2] == 1))
 			{
 				triggers[3] = 0;
 				doors[3].state = 1;
 				arena.arenahit.door3.gotoAndStop("open");
-				savedRoom[6].enemys[0].state = 2;
-				if (savedRoom[6].enemys[1].state != 0)
+				savedRooms[6].enemys[0].state = 2;
+				if (savedRooms[6].enemys[1].state != 0)
 				{
-					savedRoom[6].enemys[1].state = 2;
+					savedRooms[6].enemys[1].state = 2;
 				}
-				if (savedRoom[6].enemys[2].state != 0)
+				if (savedRooms[6].enemys[2].state != 0)
 				{
-					savedRoom[6].enemys[2].state = 2;
+					savedRooms[6].enemys[2].state = 2;
 				}
-				if (savedRoom[6].enemys[3].state != 0)
+				if (savedRooms[6].enemys[3].state != 0)
 				{
-					savedRoom[6].enemys[3].state = 2;
+					savedRooms[6].enemys[3].state = 2;
 				}
-				if (savedRoom[6].enemys[4].state != 0)
+				if (savedRooms[6].enemys[4].state != 0)
 				{
-					savedRoom[6].enemys[4].state = 2;
+					savedRooms[6].enemys[4].state = 2;
 				}
 			}
 		}
@@ -419,7 +419,7 @@
 				enemy.id = t;
 				if (!firstTimeInRoom[level])
 				{
-					enemy.type = savedRoom[level].enemy.type;
+					enemy.type = savedRooms[level].enemy.type;
 				}
 				else
 				{
@@ -614,7 +614,7 @@
 										hero.weight = hero.weight + tmpCrate.weight;
 										hero.cargo[hero.cargo.length] = tmpCrate;
 										cratesLeft--;
-										savedRoom[level].crates[tt] = 0;
+										savedRooms[level].crates[tt] = 0;
 										_parent.statusbar.crates = cratesLeft;
 										randomMessage("PICKUP");
 										if (cratesLeft == 0)
@@ -1176,12 +1176,12 @@
 				doors[1].state = 1;
 				doors[2].state = 1;
 				randomMessage("TRIGGER");
-				savedRoom[2].enemys[0].state = 1;
-				savedRoom[2].enemys[1].state = 1;
-				savedRoom[2].enemys[2].state = 1;
-				savedRoom[2].enemys[3].state = 1;
-				savedRoom[2].enemys[4].state = 1;
-				savedRoom[2].enemys[5].state = 1;
+				savedRooms[2].enemys[0].state = 1;
+				savedRooms[2].enemys[1].state = 1;
+				savedRooms[2].enemys[2].state = 1;
+				savedRooms[2].enemys[3].state = 1;
+				savedRooms[2].enemys[4].state = 1;
+				savedRooms[2].enemys[5].state = 1;
 			}
 		}
 		else if (_local1 == 2)
@@ -1222,9 +1222,9 @@
 	}
 	function saveRoomState(roomID:Number)
 	{
-		var savedRoom:OSavedRoom = this.savedRoom[roomID];
+		var savedRoom:OSavedRoom = this.savedRooms[roomID];
 		trace("Saving room state");
-		savedRoom.save(enemys);
+		savedRoom.save(this.enemys);
 	}
 	function loadRoomState(roomID:Number)
 	{
@@ -1235,7 +1235,7 @@
 		var _savedRoom:OSavedRoom;
 		while (i < enemys.length)
 		{
-			_savedRoom = savedRoom[roomI];
+			_savedRoom = this.savedRooms[roomI];
 			enemy = enemys[i];
 			enemy.load(_savedRoom.getSavedEnemy(i));
 			i++;
@@ -1243,7 +1243,7 @@
 		i = 0;
 		while (i < nbCrates)
 		{
-			_savedRoom = savedRoom[roomI];
+			_savedRoom = savedRooms[roomI];
 			if (_savedRoom.crates[i] == 0)
 			{
 				this.arena["crate" + i]. _visible = false;

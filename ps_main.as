@@ -160,7 +160,7 @@ function initGame()
 	var t = 0;
 	while (t < 4)
 	{
-		hero.hitpoints[t] = new Vector(0, 0);
+		hero.hitpoints[t] = new OVector(0, 0);
 		t++;
 	}
 	hero.mc.exhaust._visible = false;
@@ -577,7 +577,7 @@ function updateHero()
 				while (t < 6)
 				{
 					var tmpBlackholeMC = eval("arena.blackhole" + t);
-					var tmpBlackvector = new Vector(0, 0);
+					var tmpBlackvector = new OVector(0, 0);
 					tmpBlackvector.x = phys.pos.x - tmpBlackholeMC._x;
 					tmpBlackvector.y = phys.pos.y + tmpBlackholeMC._y;
 					var dist = ((tmpBlackvector.x * tmpBlackvector.x) + (tmpBlackvector.y * tmpBlackvector.y));
@@ -1031,7 +1031,7 @@ function fireEnemyBullets($enemy, gunID)
 	{
 		enemy.bulletNB++;
 	}
-	var _local3 = new Vector(0, 0);
+	var _local3 = new OVector(0, 0);
 	_local3.x = enemy.mc.ship.bulletpoint0._x;
 	_local3.y = enemy.mc.ship.bulletpoint0._y;
 	enemy.mc.ship.localToGlobal(_local3);
@@ -1049,7 +1049,7 @@ function fireEnemyBullets($enemy, gunID)
 	}
 	else if (enemyTypeProperties[enemy.typeID].accuracy < 0)
 	{
-		var vec = new Vector();
+		var vec = new OVector();
 		vec.x = hero.phys.pos.x - enemy.bullets[enemy.bulletNB].pos.x;
 		vec.y = hero.phys.pos.y - enemy.bullets[enemy.bulletNB].pos.y;
 		trace("  "+hero.phys.pos.y +"  "+enemy.bullets[enemy.bulletNB].pos.x)
@@ -1680,7 +1680,7 @@ function distPoints(x1, y1, x2, y2)
 }
 function normalizeV(x, y)
 {
-	var r = new Vector();
+	var r = new OVector();
 	var dis = Math.sqrt(x * x + y * y);
 	r.x = x / dis;
 	r.y = y / dis;
@@ -1688,7 +1688,7 @@ function normalizeV(x, y)
 }
 function normalV(v)
 {
-	result = new Vector();
+	result = new OVector();
 	result.X = v.Y;
 	result.Y = -v.X;
 	return (result);

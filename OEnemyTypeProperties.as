@@ -8,7 +8,7 @@
 	public var bulletVel:Number = 0;
 	public var nbBullets:Number;
 	public var nbGuns:Number;
-	public var firerate:Number;
+	public var firerate:Object;
 	public var accuracy:Number;
 	public var rotation:Number;
 

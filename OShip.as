@@ -27,7 +27,7 @@
 		var t:Number = 0;
 		while (t < 4)
 		{
-			this.hitpoints[t] = new Vector(0, 0);
+			this.hitpoints[t] = new OVector(0, 0);
 			t++;
 		}
 
@@ -72,7 +72,7 @@
 			heroCos = Math.cos((phys.rot - 90) * Math.PI / 180);
 			heroSin = -Math.sin((phys.rot - 90) * Math.PI / 180);
 
-			var vel:Vector = phys.vel;
+			var vel:OVector = phys.vel;
 			phys.rot += phys.rotVel;
 			vel.x *= 0.98;
 			vel.y *= 0.98;
@@ -85,7 +85,7 @@
 				while (t < 6)
 				{
 					var tmpBlackholeMC:MovieClip = arena["blackhole" + t];
-					var tmpBlackvector:Vector = new Vector(0, 0);
+					var tmpBlackvector:OVector = new OVector(0, 0);
 					tmpBlackvector.x = phys.pos.x - tmpBlackholeMC._x;
 					tmpBlackvector.y = phys.pos.y + tmpBlackholeMC._y;
 					var dist:Number = (tmpBlackvector.x * tmpBlackvector.x) + (tmpBlackvector.y * tmpBlackvector.y);
@@ -119,8 +119,8 @@
 	private function createPhys():OPhys
 	{
 		var phys:OPhys = new OPhys();
-		phys.pos = new Vector(100, 100);
-		phys.vel = new Vector(0, 0);
+		phys.pos = new OVector(100, 100);
+		phys.vel = new OVector(0, 0);
 		phys.acc = 0;
 		phys.rot = 0;
 		phys.rotVel = 0;

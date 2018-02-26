@@ -1,7 +1,7 @@
 ﻿class OPhys
 {
 	var pos;
-	var vel:Vector;
+	var vel:OVector;
 	var acc;
 	var rot;
 	var rotVel;
@@ -13,7 +13,7 @@
 	public function OPhys(pos, acc, rot, rotVel, maxAcc, minAcc, maxVel, maxRotVel)
 	{
 		this.pos = pos;
-		this.vel = new Vector();
+		this.vel = new OVector();
 		this.acc = acc;
 		this.rot = rot;
 		this.rotVel = rotVel;
